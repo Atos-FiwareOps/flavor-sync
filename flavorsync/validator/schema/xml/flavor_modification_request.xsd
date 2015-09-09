@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xs:complexType name="flavorType">
+        <xs:sequence>
+            <xs:element type="xs:boolean" name="promoted" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:boolean" name="public" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:string" name="node" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element type="flavorType" name="flavor"/>
+</xs:schema>

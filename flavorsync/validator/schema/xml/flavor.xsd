@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xs:include schemaLocation="uuid.xsd" />
+    <xs:complexType name="flavorType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="name" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="xs:short" name="vcpus" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="xs:int" name="ram" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="xs:int" name="disk" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="xs:int" name="swap" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="xs:boolean" name="promoted" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="xs:boolean" name="public" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="xs:string" name="node" maxOccurs="unbounded" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element type="flavorType" name="flavor"/>
+</xs:schema>

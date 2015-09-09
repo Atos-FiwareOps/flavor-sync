@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xs:include schemaLocation="flavor.xsd" />
+    <xs:complexType name="flavorsType">
+        <xs:sequence>
+            <xs:element type="flavorType" name="flavor" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element type="flavorsType" name="flavors"/>
+</xs:schema>
