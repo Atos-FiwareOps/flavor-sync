@@ -5,7 +5,7 @@ of OpenStack flavors. This project is part of [FIWARE](http://www.fiware.org/).
 
 ## Table of contents
 
-* [Introduction](#introduction)
+* [Overall description](#overall-description)
 * [Installation](#installation)
 	* [Software Requirements](#software-requirements)
 	* [Installation steps](#installation-steps)
