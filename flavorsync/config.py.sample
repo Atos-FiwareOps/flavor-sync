@@ -1,0 +1,6 @@
+dbhost = 'localhost'
+dbuser = 'flavorsync'
+dbpass = 'yourpassword'
+dbname = 'fiwareflavorsync'
+
+DB_URI = 'mysql+pymysql://' + dbuser + ':' + dbpass + '@' + dbhost + '/' + dbname
