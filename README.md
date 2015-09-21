@@ -6,6 +6,7 @@ of OpenStack flavors. This project is part of [FIWARE](http://www.fiware.org/).
 ## Table of contents
 
 * [Overall description](#overall-description)
+* [Features implemented](#features-implemented)
 * [Installation](#installation)
 	* [Software Requirements](#software-requirements)
 	* [Installation steps](#installation-steps)
@@ -47,32 +48,25 @@ This is a work in progress. At the moment, the remaining issues include the
 implementation of the authentication system, the integration of with the FiWare
 infrastructure and proper testing.
 
+## Features implemented
+
 The complete requirement list (at the moment) is the following one:
 
 * An infrastructure operator registers his infrastructure in the Flavor
-synchronization tool (implemented by
-[Register a new infrastucture](#post-%2Fv1%2Finfrastructures)).
+synchronization tool.
 * An infrastructure operator lists all the available flavors in his
-infrastructures (implemented by [List all flavors](#get-%2Fv1%2Fflavors{%3Fpromoted}{%3Fpublic})).
+infrastructures.
 * An infrastructure operator gets the details of one of the flavors in his
-infrastructure  (implemented by [Get flavor info](#get-%2Fv1%2Fflavors%2F{id})).
-* An infrastructure operator creates a new flavor in his infrastructure
- (implemented by [Create a new flavor](#post-%2Fv1%2Fflavors{%3Fpromoted}{%3Fpublic})).
-* An infrastructure operator updates a in his infrastructure
- (implemented by [Modify an existing flavor](#put-%2Fv1%2Fflavors%2F{id})).
-* An infrastructure operator deletes a in his infrastructure
- (implemented by [Delete flavor](#delete-%2Fv1%2Fflavors%2F{id})).
-* An infrastructure operator gets a list of the “promoted” flavors
- (implemented by [List all flavors](#get-%2Fv1%2Fflavors{%3Fpromoted}{%3Fpublic})).
-* An infrastructure operator gets a list of the public flavors
- (implemented by [List all flavors](#get-%2Fv1%2Fflavors{%3Fpromoted}{%3Fpublic})).
+infrastructure.
+* An infrastructure operator creates a new flavor in his infrastructure.
+* An infrastructure operator updates a in his infrastructure.
+* An infrastructure operator deletes a in his infrastructure.
+* An infrastructure operator gets a list of the “promoted” flavors.
+* An infrastructure operator gets a list of the public flavors.
 * An infrastructure operator “installs” one of the public flavors into his
-infrastructure (implemented by
-[Modify an existing flavor](#put-%2Fv1%2Fflavors%2F{id})).
-* An infrastructure operator publishes one of his private flavors
- (implemented by [Modify an existing flavor](#put-%2Fv1%2Fflavors%2F{id})).
-* A Fiware operator makes promotes one of the public
- (implemented by [Modify an existing flavor](#put-%2Fv1%2Fflavors%2F{id})).
+infrastructure.
+* An infrastructure operator publishes one of his private flavors.
+* A Fiware operator makes promotes one of the public.
 
 ## Installation
 
