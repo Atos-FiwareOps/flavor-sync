@@ -11,6 +11,7 @@ of OpenStack flavors. This project is part of [FIWARE](http://www.fiware.org/).
 	* [Software Requirements](#software-requirements)
 	* [Installation steps](#installation-steps)
 	* [Configuration](#configuration)
+	* [Installation verification](#installation-verification)
 * [Running](#running)
 	* [Running in development mode](#running-in-development-mode)
 	* [Deploying in production mode](#deploying-in-production-mode)
@@ -50,7 +51,8 @@ infrastructure and proper testing.
 
 ## Features implemented
 
-The complete requirement list (at the moment) is the following one:
+The complete requirement list of this version (v0.8 beta, at the moment) is the
+following one:
 
 * An infrastructure operator registers his infrastructure in the Flavor
 synchronization tool.
@@ -339,9 +341,14 @@ enabled sites and restart Nginx:
 		$ sudo ln -s /etc/nginx/sites-available/slagui /etc/nginx/sites-enabled
 		$ sudo systemctl restart nginx.service 
 
-7. Test it
+## Installation verification
 
-	curl http://localhost/slagui
+To check that everything was correctly installed, run the project in development
+mode and perform the following HTTP call:
+
+		$ curl http://localhost:5000/v1/flavors
+
+It should return an empty JSON list.
 
 ## Configure the users and roles
 
