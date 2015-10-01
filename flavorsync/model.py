@@ -53,7 +53,7 @@ class Infrastructure(db.Model, ParseableModel):
         return ParseableModel.serialize(self, mimetype)
     
     def _to_content_dict(self):
-    	return self.name
+        return self.name
     
     def to_dict(self):
         return {"infrastructure": {"name" : self.name}}
@@ -113,7 +113,7 @@ class Flavor(db.Model, ParseableModel):
     @classmethod
     def from_openstack_flavor(cls, flavor, infrastructure):
         number_regex = "[0-9]+"
-        if re.match(number_regex, flavor.swap):
+        if type(flavor.swap) is str and re.match(number_regex, flavor.swap):
             swap = int(flavor.swap)
         else:
             swap = 0

@@ -1,56 +1,6 @@
 {
     "flavors":[
         {
-            "id":"82375e8c-9b4c-4e7c-9495-c0205c8622d2",
-            "name":"tiny",
-            "vcpus":1,
-            "ram":512,
-            "disk":1,
-            "swap":0,
-            "promoted":true,
-            "public":true,
-            "nodes":[
-                "SaoPaulo",
-                "Karlskrona2",
-                "Lannion",
-                "SophiaAntipolis",
-                "Mexico",
-                "Waterford",
-                "Poznan",
-                "PiraeusU",
-                "Crete",
-                "PiraeusN",
-                "Stockholm2",
-                "Zurich",
-                "Budapest2",
-                "Berlin2",
-                "Prague",
-                "Volos",
-                "Gent",
-                "Trento",
-                "Spain2"
-            ]
-        },
-        {
-            "id":"e3b0f0a4-ea03-428b-97c6-8a06fd62b014",
-            "name":"medium",
-            "vcpus":2,
-            "ram":1024,
-            "disk":1,
-            "swap":0,
-            "promoted":false,
-            "public":true,
-            "nodes":[
-                "Waterford",
-                "Poznan",
-                "Crete",
-                "Stockholm2",
-                "Budapest2",
-                "Berlin2",
-                "Volos"
-            ]
-        },
-        {
             "id":"d1fb4620-f711-4393-b9f3-f2d476464daf",
             "name":"hpc",
             "vcpus":16,
@@ -60,8 +10,7 @@
             "promoted":false,
             "public":true,
             "nodes":[
-                "SaoPaulo",
-                "Spain2"
+                "SaoPaulo"
             ]
         },
         {

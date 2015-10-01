@@ -1,49 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flavors>
-    <flavor id="82375e8c-9b4c-4e7c-9495-c0205c8622d2">
-        <name>tiny</name>
-        <vcpus>1</vcpus>
-        <ram>512</ram>
-        <disk>1</disk>
-        <swap>0</swap>
-        <promoted>true</promoted>
-        <public>true</public>
-        <node>SaoPaulo</node>
-        <node>Karlskrona2</node>
-        <node>Lannion</node>
-        <node>SophiaAntipolis</node>
-        <node>Mexico</node>
-        <node>Waterford</node>
-        <node>Poznan</node>
-        <node>PiraeusU</node>
-        <node>Crete</node>
-        <node>PiraeusN</node>
-        <node>Stockholm2</node>
-        <node>Zurich</node>
-        <node>Budapest2</node>
-        <node>Berlin2</node>
-        <node>Prague</node>
-        <node>Volos</node>
-        <node>Gent</node>
-        <node>Trento</node>
-        <node>Spain2</node>
-    </flavor>
-    <flavor id="e3b0f0a4-ea03-428b-97c6-8a06fd62b014">
-        <name>medium</name>
-        <vcpus>2</vcpus>
-        <ram>1024</ram>
-        <disk>1</disk>
-        <swap>0</swap>
-        <promoted>false</promoted>
-        <public>true</public>
-        <node>Waterford</node>
-        <node>Poznan</node>
-        <node>Crete</node>
-        <node>Stockholm2</node>
-        <node>Budapest2</node>
-        <node>Berlin2</node>
-        <node>Volos</node>
-    </flavor>
     <flavor id="d1fb4620-f711-4393-b9f3-f2d476464daf">
         <name>hpc</name>
         <vcpus>16</vcpus>
@@ -53,7 +9,6 @@
         <promoted>false</promoted>
         <public>true</public>
         <node>SaoPaulo</node>
-        <node>Spain2</node>
     </flavor>
     <flavor id="857dc211-e1f4-4cbe-b498-6847c14acb26">
         <name>my_flavor</name>

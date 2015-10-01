@@ -13,9 +13,8 @@ from flavorsync.parser.json.json_flavor_collection_parser import JSONFlavorColle
 from flavorsync.parser.json.json_exception_parser import JSONExceptionParser
 from flavorsync.parser.parser import Parser
 
-XML_MIMETYPE = 'application/xml'
-JSON_MIMETYPE = 'application/json'
-WRONG_MIMETYPE = 'application/whatever'
+from flavorsync.test.util import XML_MIMETYPE, JSON_MIMETYPE, WRONG_MIMETYPE,\
+	json_are_equal
 
 def create_xml_infrastructure_parser_factory_test():
     factory = ParserFactory()
@@ -489,7 +488,7 @@ def json_infrastructure_from_model_parser_test():
     infrastructure_factory = factory.get_parser(JSON_MIMETYPE, Infrastructure)
     
     response = infrastructure_factory.from_model(infrastructure)
-    assert _json_are_equal(response, payload)
+    assert json_are_equal(response, payload)
     
 def json_flavor_from_model_parser_test():
     payload =  '{'
@@ -520,7 +519,7 @@ def json_flavor_from_model_parser_test():
     flavor_factory = factory.get_parser(JSON_MIMETYPE, Flavor)
     
     response = flavor_factory.from_model(flavor)
-    assert _json_are_equal(response, payload)
+    assert json_are_equal(response, payload)
     
 def json_flavor_collection_from_model_parser_test():
     payload =  '{'
@@ -571,7 +570,7 @@ def json_flavor_collection_from_model_parser_test():
     collection_factory = factory.get_parser(JSON_MIMETYPE, FlavorCollection)
     
     response = collection_factory.from_model(flavor_collection)
-    assert _json_are_equal(response, payload)
+    assert json_are_equal(response, payload)
     
 def json_error_from_model_parser_test():
     payload =  '{'
@@ -586,7 +585,7 @@ def json_error_from_model_parser_test():
     error = FlavorSyncError('Error message')
     
     response = type_factory.from_model(error)
-    assert _json_are_equal(response, payload)
+    assert json_are_equal(response, payload)
 
 def _check_infrastructure_dict_contents(dict, name, nova_url, keystone_url,
                                     username, password, tenant):
@@ -603,17 +602,3 @@ def _check_flavor_dict_contents(dict, name, vcpus, ram, disk, swap):
     assert ram == dict['ram']
     assert disk == dict['disk']
     assert swap == dict['swap']
-
-def _json_are_equal(payload1, payload2):
-	payload1_dict = json.loads(payload1)
-	payload2_dict = json.loads(payload2)
-	
-	return _order_json_data(payload1_dict) == _order_json_data(payload2_dict)
-
-def _order_json_data(obj):
-    if isinstance(obj, dict):
-        return sorted((k, _order_json_data(v)) for k, v in obj.items())
-    if isinstance(obj, list):
-        return sorted(_order_json_data(x) for x in obj)
-    else:
-        return obj
