@@ -4,9 +4,6 @@ from lxml import objectify
 from flavorsync.parser.xml.xml_parser import XMLParser
 
 class XMLInfrastructureParser(XMLParser):
-    def __init__(self):
-        print ("XML node parser initialized")
-    
     def to_dict(self, xml_data):
         obj = objectify.fromstring(xml_data)
         

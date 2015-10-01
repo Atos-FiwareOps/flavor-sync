@@ -26,7 +26,8 @@ class Infrastructure(db.Model, ParseableModel):
     password = db.Column(db.String(30))
     tenant = db.Column(db.String(20))
     
-    def __init__(self, name="", nova_url="", keystone_url="", username="", password="", tenant=""):
+    def __init__(self, name="", nova_url="", keystone_url="",
+                username="", password="", tenant=""):
         self.name = name
         self.nova_url = nova_url
         self.keystone_url = keystone_url
@@ -51,8 +52,11 @@ class Infrastructure(db.Model, ParseableModel):
     def serialize(self, mimetype):
         return ParseableModel.serialize(self, mimetype)
     
+    def _to_content_dict(self):
+    	return self.name
+    
     def to_dict(self):
-        return {"infrastructure": {"name" : self.name}} #put this on the parser
+        return {"infrastructure": {"name" : self.name}}
     
 
 class Flavor(db.Model, ParseableModel):
@@ -123,22 +127,25 @@ class Flavor(db.Model, ParseableModel):
     def serialize(self, mimetype):
         return ParseableModel.serialize(self, mimetype)
     
-    def to_dict(self):
+    def _to_content_dict(self):
         nodes_dict = []
         for node in self.nodes:
-            nodes_dict.append(node.to_dict())
+            nodes_dict.append(node._to_content_dict())
         
         return {
-                "id" : self.id,
-                "name" : self.name,
-                "vcpus": self.vcpus,
-                "ram" : self.ram,
-                "disk" : self.disk,
-                "swap" : self.swap,
-                "public": self.public,
-                "promoted" : self.promoted,
-                "nodes" : nodes_dict
-                }
+                   "id" : self.id,
+                   "name" : self.name,
+                   "vcpus": self.vcpus,
+                   "ram" : self.ram,
+                   "disk" : self.disk,
+                   "swap" : self.swap,
+                   "public": self.public,
+                   "promoted" : self.promoted,
+                   "nodes" : nodes_dict
+               }
+    
+    def to_dict(self):
+        return {"flavor" : self._to_content_dict()}
     
 class FlavorInfrastructureLink(db.Model):
     __tablename__ = 'flavor_infrastructure_link'
@@ -149,10 +156,6 @@ class FlavorInfrastructureLink(db.Model):
 class FlavorCollection(ParseableModel):
     def __init__(self, flavors):
         self.flavors = flavors
-    
-    @classmethod
-    def deserialize(cls, mimetype, data):
-        return super(FlavorCollection, cls).deserialize(mimetype, data)
     
     @classmethod
     def from_openstack_flavor_list(cls, flavor_list, infrastructure):
@@ -171,7 +174,7 @@ class FlavorCollection(ParseableModel):
     def to_dict(self):
         flavors = []
         for flavor in self.flavors:
-            flavor_dict = flavor.to_dict()
+            flavor_dict = flavor._to_content_dict()
             flavors.append(flavor_dict)
         
-        return flavors
+        return {"flavors" : flavors}

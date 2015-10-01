@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<infrastructure>
+    <name>Mordor</name>
+    <nova_url>http://11.22.33.44:8776/</nova_url>
+    <keystone_url>http://55.66.77.88:35357/</keystone_url>
+    <username>myUsername</username>
+    <password>myPassword</password>
+    <tenant>myTenant</tenant>
+</infrastructure>

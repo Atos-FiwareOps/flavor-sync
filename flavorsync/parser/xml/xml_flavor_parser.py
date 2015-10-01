@@ -6,7 +6,6 @@ from flavorsync.parser.xml.xml_parser import XMLParser
 class XMLFlavorParser(XMLParser):
     def __init__(self):
         super(XMLFlavorParser, self).__init__()
-        print ("XML node parser initialized")
     
     def to_dict(self, xml_data):
         obj = objectify.fromstring(xml_data)

@@ -7,7 +7,6 @@ class XMLParser(Parser):
     def __init__(self):
         self.xml = ""
         self.dict = {}
-        print ("XML parser initialized")
     
     def _remove_xml_namespaces(self):
         objectify.deannotate(self.xml)

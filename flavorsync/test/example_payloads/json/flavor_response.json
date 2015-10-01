@@ -1,0 +1,15 @@
+{
+    "flavor": {
+        "id":"567b200e-0aca-49e0-8e9a-8c1f6ad3abe2",
+        "name":"insane",
+        "vcpus":640,
+        "ram":1232896,
+        "disk":1262485504,
+        "swap":0,
+        "promoted":false,
+        "public":false,
+        "nodes":[
+            "Mordor"
+        ]
+    }
+}

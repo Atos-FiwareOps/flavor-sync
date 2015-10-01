@@ -5,9 +5,6 @@ from flavorsync.parser.xml.xml_parser import XMLParser
 from flavorsync.parser.xml.xml_flavor_parser import XMLFlavorParser
 
 class XMLFlavorCollectionParser(XMLParser):
-    def __init__(self):
-        print ("XML flavor collection parser initialized")
-    
     def from_model(self, flavor_collection):
         self._create_xml_root_element()
         self._insert_flavor_collection_xml_data(flavor_collection)

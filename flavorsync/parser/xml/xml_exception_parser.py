@@ -3,9 +3,6 @@ from lxml import objectify
 from flavorsync.parser.xml.xml_parser import XMLParser
 
 class XMLExceptionParser(XMLParser):
-    def __init__(self):
-        print ("XML node parser initialized")
-    
     def from_model(self, exception):
         self._create_xml_root_element()
         self._insert_infrastructure_xml_data(exception)
