@@ -111,6 +111,9 @@ class flavorsyncTestCase(unittest.TestCase):
     def test_xml_flavor_collection_from_model_parser(self):
         parser_unit_tests.xml_flavor_collection_from_model_parser_test()
     
+    def test_xml_empty_flavor_collection_from_model_parser(self):
+        parser_unit_tests.xml_empty_flavor_collection_from_model_parser_test()
+    
     def test_xml_error_from_model_parser(self):
         parser_unit_tests.xml_error_from_model_parser_test()
     
@@ -122,6 +125,9 @@ class flavorsyncTestCase(unittest.TestCase):
     
     def test_json_flavor_collection_from_model_parser(self):
         parser_unit_tests.json_flavor_collection_from_model_parser_test()
+    
+    def test_json_empty_flavor_collection_from_model_parser(self):
+        parser_unit_tests.json_empty_flavor_collection_from_model_parser_test()
     
     def test_json_error_from_model_parser(self):
         parser_unit_tests.json_error_from_model_parser_test()
@@ -183,8 +189,14 @@ class flavorsyncTestCase(unittest.TestCase):
     def test_serialize_xml_flavor_collection(self):
         model_unit_test.serialize_xml_flavor_collection_test()
     
+    def test_serialize_xml_empty_flavor_collection(self):
+        model_unit_test.serialize_xml_empty_flavor_collection_test()
+    
     def test_serialize_json_flavor_collection(self):
         model_unit_test.serialize_json_flavor_collection_test()
+    
+    def test_serialize_json_empty_flavor_collection(self):
+        model_unit_test.serialize_json_empty_flavor_collection_test()
     
     def test_serialize_wrong_mimetype_flavor_collection(self):
         model_unit_test.serialize_wrong_mimetype_flavor_collection_test()
@@ -192,8 +204,14 @@ class flavorsyncTestCase(unittest.TestCase):
     def test_flavor_collection_to_dict(self):
         model_unit_test.flavor_collection_to_dict_test()
     
+    def test_empty_flavor_collection_to_dict(self):
+        model_unit_test.emtpy_flavor_collection_to_dict_test()
+    
     def test_from_openstack_flavor_list(self):
         model_unit_test.from_openstack_flavor_list_test()
+    
+    def test_from_empty_openstack_flavor_list(self):
+        model_unit_test.from_empty_openstack_flavor_list_test()
     
     def test_flavor_collection_extend_list(self):
         model_unit_test.flavor_collection_extend_list_test()

@@ -216,6 +216,15 @@ def serialize_xml_flavor_collection_test():
     flavor_collection_xml = flavor_collection.serialize(XML_MIMETYPE).decode('utf-8')
     assert flavor_collection_xml in decoded_data
     
+def serialize_xml_empty_flavor_collection_test():
+    data =  '<?xml version="1.0" encoding="UTF-8"?>'
+    data += '<flavors/>'
+    
+    flavor_collection = FlavorCollection([])
+    
+    flavor_collection_xml = flavor_collection.serialize(XML_MIMETYPE).decode('utf-8')
+    assert flavor_collection_xml in data
+    
 def serialize_json_flavor_collection_test():
     file_json = _load_json_from_file('flavor_collection_response.json')
     
@@ -237,6 +246,14 @@ def serialize_json_flavor_collection_test():
     
     flavor_collection_json = flavor_collection.serialize(JSON_MIMETYPE)
     assert json_are_equal(flavor_collection_json, file_json)
+    
+def serialize_json_empty_flavor_collection_test():
+    data =  '{"flavors":[]}'
+    
+    flavor_collection = FlavorCollection([])
+    
+    flavor_collection_json = flavor_collection.serialize(JSON_MIMETYPE)
+    assert json_are_equal(flavor_collection_json, data)
     
 def serialize_wrong_mimetype_flavor_collection_test():
     file_json = _load_json_from_file('flavor_collection_response.json')
@@ -284,6 +301,13 @@ def flavor_collection_to_dict_test():
     
     assert json_are_equal(expected_dict, flavor_collection.to_dict())
     
+def emtpy_flavor_collection_to_dict_test():
+    expected_dict =  {"flavors":[]}
+    
+    flavor_collection = FlavorCollection([])
+    
+    assert json_are_equal(expected_dict, flavor_collection.to_dict())
+    
 def from_openstack_flavor_list_test():
     data = _load_json_from_file('flavor_collection_response.json')
     
@@ -309,6 +333,18 @@ def from_openstack_flavor_list_test():
     
     converted_collection = FlavorCollection.from_openstack_flavor_list(
                                                     openstackflavors, mordor)
+    
+    assert json_are_equal(
+                flavor_collection.to_dict(), converted_collection.to_dict())
+    
+def from_empty_openstack_flavor_list_test():
+    mordor = Infrastructure('Mordor', 'http://11.22.33.44:8776/',
+        'http://55.66.77.88:35357/', 'myUsername', 'myPassword', 'myTenant')
+    
+    flavor_collection = FlavorCollection([])
+    
+    converted_collection = FlavorCollection.from_openstack_flavor_list(
+                                                    [], mordor)
     
     assert json_are_equal(
                 flavor_collection.to_dict(), converted_collection.to_dict())

@@ -295,7 +295,7 @@ def xml_flavor_collection_to_dict_parser_test():
         assert False
     except NotImplementedError as e:
         assert 'Unrecognized mimetype or model type' in str(e)
-    
+
 def xml_exception_to_dict_parser_test():
     payload = """<error>
                      <message>
@@ -456,6 +456,18 @@ def xml_flavor_collection_from_model_parser_test():
     response = collection_factory.from_model(flavor_collection)
     assert response.decode("utf-8") in payload
     
+def xml_empty_flavor_collection_from_model_parser_test():
+    payload =  '<?xml version="1.0" encoding="UTF-8"?>'
+    payload += '<flavors/>'
+    
+    flavor_collection = FlavorCollection([])
+    
+    factory = ParserFactory()
+    collection_factory = factory.get_parser(XML_MIMETYPE, FlavorCollection)
+    
+    response = collection_factory.from_model(flavor_collection)
+    assert response.decode("utf-8") in payload
+    
 def xml_error_from_model_parser_test():
     payload =  '<error>'
     payload +=      '<message>'
@@ -565,6 +577,17 @@ def json_flavor_collection_from_model_parser_test():
     flavors = [flavor1, flavor2]
     
     flavor_collection = FlavorCollection(flavors)
+    
+    factory = ParserFactory()
+    collection_factory = factory.get_parser(JSON_MIMETYPE, FlavorCollection)
+    
+    response = collection_factory.from_model(flavor_collection)
+    assert json_are_equal(response, payload)
+    
+def json_empty_flavor_collection_from_model_parser_test():
+    payload =  '{"flavors":[]}'
+    
+    flavor_collection = FlavorCollection([])
     
     factory = ParserFactory()
     collection_factory = factory.get_parser(JSON_MIMETYPE, FlavorCollection)
