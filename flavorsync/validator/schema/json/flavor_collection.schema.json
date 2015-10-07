@@ -33,7 +33,7 @@
                         },
                         "swap": {
                             "id": "swap",
-                            "type": "string"
+                            "type": "integer"
                         },
                         "promoted": {
                             "id": "promoted",
@@ -164,7 +164,7 @@
                         },
                         "swap": {
                             "id": "swap",
-                            "type": "string"
+                            "type": "integer"
                         },
                         "promoted": {
                             "id": "promoted",
@@ -236,7 +236,7 @@
                         },
                         "swap": {
                             "id": "swap",
-                            "type": "string"
+                            "type": "integer"
                         },
                         "promoted": {
                             "id": "promoted",
@@ -288,7 +288,7 @@
                         },
                         "swap": {
                             "id": "swap",
-                            "type": "string"
+                            "type": "integer"
                         },
                         "promoted": {
                             "id": "promoted",

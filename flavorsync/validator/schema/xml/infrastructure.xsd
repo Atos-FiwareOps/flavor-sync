@@ -5,7 +5,6 @@
         <xs:sequence>
             <xs:element type="xs:string" name="name" minOccurs="1" maxOccurs="1"/>
         </xs:sequence>
-        <xs:attribute type="uuid" name="id" use="required"/>
     </xs:complexType>
     <xs:element type="infrastructureType" name="infrastructure"/>
 </xs:schema>

@@ -12,6 +12,7 @@
             <xs:element type="xs:boolean" name="public" minOccurs="1" maxOccurs="1"/>
             <xs:element type="xs:string" name="node" maxOccurs="unbounded" minOccurs="1"/>
         </xs:sequence>
+        <xs:attribute type="uuid" name="id" use="required"/>
     </xs:complexType>
     <xs:element type="flavorType" name="flavor"/>
 </xs:schema>

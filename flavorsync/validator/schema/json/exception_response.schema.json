@@ -3,21 +3,21 @@
     "id": "/",
     "type": "object",
     "properties": {
-        "infrastructure": {
-            "id": "infrastructure",
+        "error": {
+            "id": "error",
             "type": "object",
             "properties": {
-                "name": {
-                    "id": "name",
+                "message": {
+                    "id": "message",
                     "type": "string"
                 }
             },
             "required": [
-                "name"
+                "message"
             ]
         }
     },
     "required": [
-        "infrastructure"
+        "error"
     ]
 }

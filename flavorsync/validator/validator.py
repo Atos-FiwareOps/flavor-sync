@@ -1,5 +1,5 @@
 class Validator():
-    def __init__(self, schema_file, error):
+    def __init__(self, schema_file, error=Exception):
         self.schema_file = schema_file
         self.error = error
     

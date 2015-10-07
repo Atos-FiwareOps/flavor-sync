@@ -1,3 +1,6 @@
+import flavorsync.test.util as util
+import re
+
 from flavorsync import app
 
 from flask import request
@@ -7,7 +10,6 @@ from flavorsync.database import db
 from flavorsync.flavor_synchronizer import FlavorSynchronizer
 from werkzeug.wrappers import Response
 from flavorsync.validator import factory_selector
-import re
 
 @app.errorhandler(404)
 def not_found(error):
@@ -24,7 +26,8 @@ def root():
 
 @app.route("/v1/infrastructures", methods=['POST'])
 def register_infrastructure():
-    body = _remove_non_usable_characters(_remove_xml_header(request.data.decode("utf-8")))
+    body = util.remove_non_usable_characters(
+                        util.remove_xml_header(request.data.decode("utf-8")))
     content_type = request.content_type
     
     validator_factory = factory_selector.get_factory(content_type)
@@ -60,7 +63,8 @@ def get_flavors():
 
 @app.route("/v1/flavors", methods=['POST'])
 def create_flavor():
-    body = _remove_non_usable_characters(_remove_xml_header(request.data.decode("utf-8")))
+    body = util.remove_non_usable_characters(
+                        util.remove_xml_header(request.data.decode("utf-8")))
     content_type = request.content_type
     
     validator_factory = factory_selector.get_factory(content_type)
@@ -87,7 +91,8 @@ def get_flavor(flavor_id):
 
 @app.route("/v1/flavors/<flavor_id>", methods=['PUT'])
 def publish_or_promote_flavor(flavor_id):
-    body = _remove_non_usable_characters(_remove_xml_header(request.data.decode("utf-8")))
+    body = util.remove_non_usable_characters(
+                        util.remove_xml_header(request.data.decode("utf-8")))
     content_type = request.content_type
     
     validator_factory = factory_selector.get_factory(content_type)
@@ -111,11 +116,3 @@ def delete_flavor(flavor_id):
     manager = FlavorSynchronizer()
     manager.delete_flavor(flavor_id)
     return Response(status=204)
-
-def _remove_xml_header(xml):
-    return re.sub("<\?.*\?>", "", xml)
-    
-def _remove_non_usable_characters(xml):
-    parsed_xml = re.sub("\\n", "", xml)
-    parsed_xml = re.sub(" +<", "<", parsed_xml)
-    return parsed_xml

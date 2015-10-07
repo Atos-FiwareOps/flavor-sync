@@ -1,4 +1,4 @@
-import json
+import flavorsync.test.util as util
 
 from flavorsync.parser.parser_factory import ParserFactory
 from flavorsync.model import Infrastructure, Flavor, FlavorCollection, FlavorInfrastructureLink
@@ -13,30 +13,27 @@ from flavorsync.parser.json.json_flavor_collection_parser import JSONFlavorColle
 from flavorsync.parser.json.json_exception_parser import JSONExceptionParser
 from flavorsync.parser.parser import Parser
 
-from flavorsync.test.util import XML_MIMETYPE, JSON_MIMETYPE, WRONG_MIMETYPE,\
-	json_are_equal
-
 def create_xml_infrastructure_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(XML_MIMETYPE, Infrastructure)
+    type_factory = factory.get_parser(util.XML_MIMETYPE, Infrastructure)
     
     assert type(type_factory) is XMLInfrastructureParser
     
 def create_xml_flavor_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(XML_MIMETYPE, Flavor)
+    type_factory = factory.get_parser(util.XML_MIMETYPE, Flavor)
     
     assert type(type_factory) is XMLFlavorParser
     
 def create_xml_flavor_collection_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(XML_MIMETYPE, FlavorCollection)
+    type_factory = factory.get_parser(util.XML_MIMETYPE, FlavorCollection)
     
     assert type(type_factory) is XMLFlavorCollectionParser
     
 def create_xml_exception_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(XML_MIMETYPE, FlavorSyncError)
+    type_factory = factory.get_parser(util.XML_MIMETYPE, FlavorSyncError)
     
     assert type(type_factory) is XMLExceptionParser
 
@@ -45,25 +42,25 @@ def create_xml_exception_parser_factory_test():
 
 def create_json_infrastructure_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(JSON_MIMETYPE, Infrastructure)
+    type_factory = factory.get_parser(util.JSON_MIMETYPE, Infrastructure)
     
     assert type(type_factory) is JSONInfrastructureParser
     
 def create_json_flavor_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(JSON_MIMETYPE, Flavor)
+    type_factory = factory.get_parser(util.JSON_MIMETYPE, Flavor)
     
     assert type(type_factory) is JSONFlavorParser
     
 def create_json_flavor_collection_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(JSON_MIMETYPE, FlavorCollection)
+    type_factory = factory.get_parser(util.JSON_MIMETYPE, FlavorCollection)
     
     assert type(type_factory) is JSONFlavorCollectionParser
     
 def create_json_exception_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(JSON_MIMETYPE, FlavorSyncError)
+    type_factory = factory.get_parser(util.JSON_MIMETYPE, FlavorSyncError)
     
     assert type(type_factory) is JSONExceptionParser
 
@@ -72,25 +69,25 @@ def create_json_exception_parser_factory_test():
 
 def create_wrong_mimetype_infrastructure_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(WRONG_MIMETYPE, Infrastructure)
+    type_factory = factory.get_parser(util.WRONG_MIMETYPE, Infrastructure)
     
     assert type(type_factory) is Parser
     
 def create_wrong_mimetype_flavor_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(WRONG_MIMETYPE, Flavor)
+    type_factory = factory.get_parser(util.WRONG_MIMETYPE, Flavor)
     
     assert type(type_factory) is Parser
     
 def create_wrong_mimetype_flavor_collection_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(WRONG_MIMETYPE, FlavorCollection)
+    type_factory = factory.get_parser(util.WRONG_MIMETYPE, FlavorCollection)
     
     assert type(type_factory) is Parser
     
 def create_wrong_mimetype_exception_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(WRONG_MIMETYPE, FlavorSyncError)
+    type_factory = factory.get_parser(util.WRONG_MIMETYPE, FlavorSyncError)
     
     assert type(type_factory) is Parser
 
@@ -99,13 +96,13 @@ def create_wrong_mimetype_exception_parser_factory_test():
 
 def create_xml_wrong_type_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(XML_MIMETYPE, FlavorInfrastructureLink)
+    type_factory = factory.get_parser(util.XML_MIMETYPE, FlavorInfrastructureLink)
     
     assert type(type_factory) is Parser
     
 def create_json_wrong_type_parser_factory_test():
     factory = ParserFactory()
-    type_factory = factory.get_parser(JSON_MIMETYPE, FlavorInfrastructureLink)
+    type_factory = factory.get_parser(util.JSON_MIMETYPE, FlavorInfrastructureLink)
     
     assert type(type_factory) is Parser
 
@@ -123,7 +120,7 @@ def xml_infrastructure_to_dict_parser_test():
                  </infrastructure>"""
                  
     factory = ParserFactory()
-    infrastructure_factory = factory.get_parser(XML_MIMETYPE, Infrastructure)
+    infrastructure_factory = factory.get_parser(util.XML_MIMETYPE, Infrastructure)
     
     infrastructure = infrastructure_factory.to_dict(payload)
     _check_infrastructure_dict_contents(
@@ -140,7 +137,7 @@ def xml_flavor_to_dict_parser_test():
                  </flavor>"""
                  
     factory = ParserFactory()
-    flavor_factory = factory.get_parser(XML_MIMETYPE, Flavor)
+    flavor_factory = factory.get_parser(util.XML_MIMETYPE, Flavor)
     
     flavor = flavor_factory.to_dict(payload)
     _check_flavor_dict_contents(
@@ -152,7 +149,7 @@ def xml_flavor_publication_to_dict_parser_test():
                  </flavor>"""
                  
     factory = ParserFactory()
-    flavor_factory = factory.get_parser(XML_MIMETYPE, Flavor)
+    flavor_factory = factory.get_parser(util.XML_MIMETYPE, Flavor)
     
     flavor = flavor_factory.to_dict(payload)
     assert flavor['public']
@@ -163,7 +160,7 @@ def xml_flavor_promotion_to_dict_parser_test():
                  </flavor>"""
                  
     factory = ParserFactory()
-    flavor_factory = factory.get_parser(XML_MIMETYPE, Flavor)
+    flavor_factory = factory.get_parser(util.XML_MIMETYPE, Flavor)
     
     flavor = flavor_factory.to_dict(payload)
     assert flavor['promoted']
@@ -174,7 +171,7 @@ def xml_flavor_installation_to_dict_parser_test():
                  </flavor>"""
                  
     factory = ParserFactory()
-    flavor_factory = factory.get_parser(XML_MIMETYPE, Flavor)
+    flavor_factory = factory.get_parser(util.XML_MIMETYPE, Flavor)
     
     flavor = flavor_factory.to_dict(payload)
     assert len(flavor['nodes']) == 1
@@ -196,7 +193,7 @@ def json_infrastructure_to_dict_parser_test():
                  }"""
                  
     factory = ParserFactory()
-    infrastructure_factory = factory.get_parser(JSON_MIMETYPE, Infrastructure)
+    infrastructure_factory = factory.get_parser(util.JSON_MIMETYPE, Infrastructure)
     
     infrastructure = infrastructure_factory.to_dict(payload)
     _check_infrastructure_dict_contents(
@@ -215,7 +212,7 @@ def json_flavor_to_dict_parser_test():
                  }"""
                  
     factory = ParserFactory()
-    flavor_factory = factory.get_parser(JSON_MIMETYPE, Flavor)
+    flavor_factory = factory.get_parser(util.JSON_MIMETYPE, Flavor)
     
     flavor = flavor_factory.to_dict(payload)
     _check_flavor_dict_contents(
@@ -229,7 +226,7 @@ def json_flavor_publication_to_dict_parser_test():
                  }"""
                  
     factory = ParserFactory()
-    flavor_factory = factory.get_parser(JSON_MIMETYPE, Flavor)
+    flavor_factory = factory.get_parser(util.JSON_MIMETYPE, Flavor)
     
     flavor = flavor_factory.to_dict(payload)
     assert flavor['public']
@@ -242,7 +239,7 @@ def json_flavor_promotion_to_dict_parser_test():
                  }"""
                  
     factory = ParserFactory()
-    flavor_factory = factory.get_parser(JSON_MIMETYPE, Flavor)
+    flavor_factory = factory.get_parser(util.JSON_MIMETYPE, Flavor)
     
     flavor = flavor_factory.to_dict(payload)
     assert flavor['promoted']
@@ -255,7 +252,7 @@ def json_flavor_installation_to_dict_parser_test():
                  }"""
                  
     factory = ParserFactory()
-    flavor_factory = factory.get_parser(JSON_MIMETYPE, Flavor)
+    flavor_factory = factory.get_parser(util.JSON_MIMETYPE, Flavor)
     
     flavor = flavor_factory.to_dict(payload)
     assert len(flavor['nodes']) == 1
@@ -288,7 +285,7 @@ def xml_flavor_collection_to_dict_parser_test():
                      </flavor>
                  </flavors>"""
     factory = ParserFactory()
-    type_factory = factory.get_parser(XML_MIMETYPE, FlavorCollection)
+    type_factory = factory.get_parser(util.XML_MIMETYPE, FlavorCollection)
     
     try:
         type_factory.to_dict(payload)
@@ -304,7 +301,7 @@ def xml_exception_to_dict_parser_test():
                  </error>"""
     
     factory = ParserFactory()
-    type_factory = factory.get_parser(XML_MIMETYPE, FlavorSyncError)
+    type_factory = factory.get_parser(util.XML_MIMETYPE, FlavorSyncError)
     
     try:
         type_factory.to_dict(payload)
@@ -341,7 +338,7 @@ def json_flavor_collection_to_dict_parser_test():
                  }"""
     
     factory = ParserFactory()
-    type_factory = factory.get_parser(JSON_MIMETYPE, FlavorCollection)
+    type_factory = factory.get_parser(util.JSON_MIMETYPE, FlavorCollection)
     
     try:
         type_factory.to_dict(payload)
@@ -357,7 +354,7 @@ def json_exception_to_dict_parser_test():
                  }"""
     
     factory = ParserFactory()
-    type_factory = factory.get_parser(JSON_MIMETYPE, FlavorSyncError)
+    type_factory = factory.get_parser(util.JSON_MIMETYPE, FlavorSyncError)
     
     try:
         type_factory.to_dict(payload)
@@ -377,7 +374,7 @@ def xml_infrastructure_from_model_parser_test():
         'http://55.66.77.88:35357/', 'myUsername', 'myPassword', 'myTenant')
     
     factory = ParserFactory()
-    infrastructure_factory = factory.get_parser(XML_MIMETYPE, Infrastructure)
+    infrastructure_factory = factory.get_parser(util.XML_MIMETYPE, Infrastructure)
     
     response = infrastructure_factory.from_model(infrastructure)
     assert response.decode("utf-8") in payload
@@ -403,7 +400,7 @@ def xml_flavor_from_model_parser_test():
                 1232896, 1262485504, 0, False, False, infrastructures)
     
     factory = ParserFactory()
-    flavor_factory = factory.get_parser(XML_MIMETYPE, Flavor)
+    flavor_factory = factory.get_parser(util.XML_MIMETYPE, Flavor)
     
     response = flavor_factory.from_model(flavor)
     assert response.decode("utf-8") in payload
@@ -451,7 +448,7 @@ def xml_flavor_collection_from_model_parser_test():
     flavor_collection = FlavorCollection(flavors)
     
     factory = ParserFactory()
-    collection_factory = factory.get_parser(XML_MIMETYPE, FlavorCollection)
+    collection_factory = factory.get_parser(util.XML_MIMETYPE, FlavorCollection)
     
     response = collection_factory.from_model(flavor_collection)
     assert response.decode("utf-8") in payload
@@ -463,7 +460,7 @@ def xml_empty_flavor_collection_from_model_parser_test():
     flavor_collection = FlavorCollection([])
     
     factory = ParserFactory()
-    collection_factory = factory.get_parser(XML_MIMETYPE, FlavorCollection)
+    collection_factory = factory.get_parser(util.XML_MIMETYPE, FlavorCollection)
     
     response = collection_factory.from_model(flavor_collection)
     assert response.decode("utf-8") in payload
@@ -476,7 +473,7 @@ def xml_error_from_model_parser_test():
     payload += '</error>'
     
     factory = ParserFactory()
-    type_factory = factory.get_parser(XML_MIMETYPE, FlavorSyncError)
+    type_factory = factory.get_parser(util.XML_MIMETYPE, FlavorSyncError)
     
     error = FlavorSyncError('Error message')
     
@@ -497,10 +494,10 @@ def json_infrastructure_from_model_parser_test():
         'http://55.66.77.88:35357/', 'myUsername', 'myPassword', 'myTenant')
     
     factory = ParserFactory()
-    infrastructure_factory = factory.get_parser(JSON_MIMETYPE, Infrastructure)
+    infrastructure_factory = factory.get_parser(util.JSON_MIMETYPE, Infrastructure)
     
     response = infrastructure_factory.from_model(infrastructure)
-    assert json_are_equal(response, payload)
+    assert util.json_are_equal(response, payload)
     
 def json_flavor_from_model_parser_test():
     payload =  '{'
@@ -528,10 +525,10 @@ def json_flavor_from_model_parser_test():
                 1232896, 1262485504, 0, False, False, infrastructures)
     
     factory = ParserFactory()
-    flavor_factory = factory.get_parser(JSON_MIMETYPE, Flavor)
+    flavor_factory = factory.get_parser(util.JSON_MIMETYPE, Flavor)
     
     response = flavor_factory.from_model(flavor)
-    assert json_are_equal(response, payload)
+    assert util.json_are_equal(response, payload)
     
 def json_flavor_collection_from_model_parser_test():
     payload =  '{'
@@ -579,10 +576,10 @@ def json_flavor_collection_from_model_parser_test():
     flavor_collection = FlavorCollection(flavors)
     
     factory = ParserFactory()
-    collection_factory = factory.get_parser(JSON_MIMETYPE, FlavorCollection)
+    collection_factory = factory.get_parser(util.JSON_MIMETYPE, FlavorCollection)
     
     response = collection_factory.from_model(flavor_collection)
-    assert json_are_equal(response, payload)
+    assert util.json_are_equal(response, payload)
     
 def json_empty_flavor_collection_from_model_parser_test():
     payload =  '{"flavors":[]}'
@@ -590,10 +587,10 @@ def json_empty_flavor_collection_from_model_parser_test():
     flavor_collection = FlavorCollection([])
     
     factory = ParserFactory()
-    collection_factory = factory.get_parser(JSON_MIMETYPE, FlavorCollection)
+    collection_factory = factory.get_parser(util.JSON_MIMETYPE, FlavorCollection)
     
     response = collection_factory.from_model(flavor_collection)
-    assert json_are_equal(response, payload)
+    assert util.json_are_equal(response, payload)
     
 def json_error_from_model_parser_test():
     payload =  '{'
@@ -603,25 +600,25 @@ def json_error_from_model_parser_test():
     payload += '}'
     
     factory = ParserFactory()
-    type_factory = factory.get_parser(JSON_MIMETYPE, FlavorSyncError)
+    type_factory = factory.get_parser(util.JSON_MIMETYPE, FlavorSyncError)
     
     error = FlavorSyncError('Error message')
     
     response = type_factory.from_model(error)
-    assert json_are_equal(response, payload)
+    assert util.json_are_equal(response, payload)
 
-def _check_infrastructure_dict_contents(dict, name, nova_url, keystone_url,
-                                    username, password, tenant):
-    assert name in dict['name']
-    assert nova_url in dict['nova_url']
-    assert keystone_url in dict['keystone_url']
-    assert username in dict['username']
-    assert password in dict['password']
-    assert tenant in dict['tenant']
+def _check_infrastructure_dict_contents(dictionary, name, nova_url,
+                                    keystone_url, username, password, tenant):
+    assert name in dictionary['name']
+    assert nova_url in dictionary['nova_url']
+    assert keystone_url in dictionary['keystone_url']
+    assert username in dictionary['username']
+    assert password in dictionary['password']
+    assert tenant in dictionary['tenant']
 
-def _check_flavor_dict_contents(dict, name, vcpus, ram, disk, swap):
-    assert name in dict['name']
-    assert vcpus == dict['vcpus']
-    assert ram == dict['ram']
-    assert disk == dict['disk']
-    assert swap == dict['swap']
+def _check_flavor_dict_contents(dictionary, name, vcpus, ram, disk, swap):
+    assert name in dictionary['name']
+    assert vcpus == dictionary['vcpus']
+    assert ram == dictionary['ram']
+    assert disk == dictionary['disk']
+    assert swap == dictionary['swap']

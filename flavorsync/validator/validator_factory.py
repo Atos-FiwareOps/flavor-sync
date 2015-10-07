@@ -5,22 +5,25 @@ class ValidatorFactory():
     def __init__(self, mimetype=None):
         self.mimetype = mimetype
     
-    def createFlavorCollectionValidator(self):
+    def create_exception_validator(self):
+        self._raise_error()
+    
+    def create_flavor_collection_validator(self):
         self._raise_error()
         
-    def createFlavorModificationRequestValidator(self):
+    def create_flavor_modification_request_validator(self):
         self._raise_error()
     
-    def createFlavorRequestValidator(self):
+    def create_flavor_request_validator(self):
         self._raise_error()
     
-    def createFlavorValidator(self):
+    def create_flavor_validator(self):
         self._raise_error()
     
-    def createInfrastructureRequestValidator(self):
+    def create_infrastructure_request_validator(self):
         self._raise_error()
     
-    def createInfrastructureValidator(self):
+    def create_infrastructure_validator(self):
         self._raise_error()
     
     def _raise_error(self):

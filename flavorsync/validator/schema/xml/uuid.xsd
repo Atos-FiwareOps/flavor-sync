@@ -2,7 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
     <xs:simpleType name="uuid">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[A-Za-z\d]{8}-[A-Za-z\d]{4}{3}-[A-Za-z\d]{12}"/>
+            <xs:pattern value="[A-Fa-f\d]{8}-[A-Fa-f\d]{4}-[A-Fa-f\d]{4}-[A-Fa-f\d]{4}-[A-Fa-f\d]{12}"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
