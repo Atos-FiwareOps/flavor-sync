@@ -48,6 +48,7 @@ def remove_xml_header(xml):
 def remove_non_usable_characters(xml):
     parsed_xml = re.sub("\\n", "", xml)
     parsed_xml = re.sub(" +<", "<", parsed_xml)
+    parsed_xml = re.sub("> +", ">", parsed_xml)
     return parsed_xml
 
 def json_are_equal(payload1, payload2):

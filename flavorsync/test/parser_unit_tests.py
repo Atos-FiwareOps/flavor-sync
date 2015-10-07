@@ -110,15 +110,9 @@ def create_json_wrong_type_parser_factory_test():
 
 
 def xml_infrastructure_to_dict_parser_test():
-    payload = """<infrastructure>
-                     <name>Mordor</name>
-                     <nova_url>http://11.22.33.44:8776/</nova_url>
-                     <keystone_url>http://55.66.77.88:35357/</keystone_url>
-                     <username>myUsername</username>
-                     <password>myPassword</password>
-                     <tenant>myTenant</tenant>
-                 </infrastructure>"""
-                 
+    payload = util.load_xml_example_as_string('infrastructure_request.xml')
+    payload = util.remove_xml_header(payload)
+    payload = util.remove_non_usable_characters(payload)
     factory = ParserFactory()
     infrastructure_factory = factory.get_parser(util.XML_MIMETYPE, Infrastructure)
     
@@ -128,14 +122,9 @@ def xml_infrastructure_to_dict_parser_test():
         'http://55.66.77.88:35357/', 'myUsername', 'myPassword', 'myTenant')
 
 def xml_flavor_to_dict_parser_test():
-    payload = """<flavor>
-                     <name>insane</name>
-                     <vcpus>640</vcpus>
-                     <ram>1232896</ram>
-                     <disk>1262485504</disk>
-                     <swap>0</swap>
-                 </flavor>"""
-                 
+    payload = util.load_xml_example_as_string('flavor_creation_request.xml')
+    payload = util.remove_xml_header(payload)
+    payload = util.remove_non_usable_characters(payload)
     factory = ParserFactory()
     flavor_factory = factory.get_parser(util.XML_MIMETYPE, Flavor)
     
@@ -144,10 +133,9 @@ def xml_flavor_to_dict_parser_test():
         flavor, 'insane', 640, 1232896, 1262485504, 0)
 
 def xml_flavor_publication_to_dict_parser_test():
-    payload = """<flavor>
-                     <public>true</public>
-                 </flavor>"""
-                 
+    payload = util.load_xml_from_file('flavor_publication_request.xml')
+    payload = util.remove_xml_header(payload)
+    payload = util.remove_non_usable_characters(payload)
     factory = ParserFactory()
     flavor_factory = factory.get_parser(util.XML_MIMETYPE, Flavor)
     
@@ -155,10 +143,9 @@ def xml_flavor_publication_to_dict_parser_test():
     assert flavor['public']
 
 def xml_flavor_promotion_to_dict_parser_test():
-    payload = """<flavor>
-                     <promoted>true</promoted>
-                 </flavor>"""
-                 
+    payload = util.load_xml_example_as_string('flavor_promotion_request.xml')
+    payload = util.remove_xml_header(payload)
+    payload = util.remove_non_usable_characters(payload)
     factory = ParserFactory()
     flavor_factory = factory.get_parser(util.XML_MIMETYPE, Flavor)
     
@@ -166,10 +153,9 @@ def xml_flavor_promotion_to_dict_parser_test():
     assert flavor['promoted']
 
 def xml_flavor_installation_to_dict_parser_test():
-    payload = """<flavor>
-                     <node>Mordor</node>
-                 </flavor>"""
-                 
+    payload = util.load_xml_example_as_string('flavor_installation_request.xml')
+    payload = util.remove_xml_header(payload)
+    payload = util.remove_non_usable_characters(payload)
     factory = ParserFactory()
     flavor_factory = factory.get_parser(util.XML_MIMETYPE, Flavor)
     
@@ -181,17 +167,7 @@ def xml_flavor_installation_to_dict_parser_test():
 
 
 def json_infrastructure_to_dict_parser_test():
-    payload = """{
-                     "infrastructure": {
-                         "name": "Mordor",
-                         "nova_url": "http://11.22.33.44:8776/",
-                         "keystone_url": "http://55.66.77.88:35357/",
-                         "username": "myUsername",
-                         "password": "myPassword",
-                         "tenant": "myTenant"
-                     }
-                 }"""
-                 
+    payload = util.load_json_example_as_string('infrastructure_request.json')
     factory = ParserFactory()
     infrastructure_factory = factory.get_parser(util.JSON_MIMETYPE, Infrastructure)
     
@@ -201,16 +177,7 @@ def json_infrastructure_to_dict_parser_test():
         'http://55.66.77.88:35357/', 'myUsername', 'myPassword', 'myTenant')
 
 def json_flavor_to_dict_parser_test():
-    payload = """{
-                     "flavor": {
-                         "name":"insane",
-                         "vcpus":640,
-                         "ram":1232896,
-                         "disk":1262485504,
-                         "swap":0
-                     }
-                 }"""
-                 
+    payload = util.load_json_example_as_string('flavor_creation_request.json')
     factory = ParserFactory()
     flavor_factory = factory.get_parser(util.JSON_MIMETYPE, Flavor)
     
@@ -219,12 +186,7 @@ def json_flavor_to_dict_parser_test():
         flavor, 'insane', 640, 1232896, 1262485504, 0)
 
 def json_flavor_publication_to_dict_parser_test():
-    payload = """{
-                     "flavor": {
-                         "public": true
-                     }
-                 }"""
-                 
+    payload = util.load_json_example_as_string('flavor_publication_request.json')
     factory = ParserFactory()
     flavor_factory = factory.get_parser(util.JSON_MIMETYPE, Flavor)
     
@@ -232,12 +194,7 @@ def json_flavor_publication_to_dict_parser_test():
     assert flavor['public']
 
 def json_flavor_promotion_to_dict_parser_test():
-    payload = """{
-                     "flavor": {
-                         "promoted": true
-                     }
-                 }"""
-                 
+    payload = util.load_json_example_as_string('flavor_promotion_request.json')
     factory = ParserFactory()
     flavor_factory = factory.get_parser(util.JSON_MIMETYPE, Flavor)
     
@@ -245,12 +202,7 @@ def json_flavor_promotion_to_dict_parser_test():
     assert flavor['promoted']
 
 def json_flavor_installation_to_dict_parser_test():
-    payload = """{
-                     "flavor": {
-                         "nodes":["Mordor"]
-                     }
-                 }"""
-                 
+    payload = util.load_json_example_as_string('flavor_installation_request.json')
     factory = ParserFactory()
     flavor_factory = factory.get_parser(util.JSON_MIMETYPE, Flavor)
     
@@ -262,28 +214,9 @@ def json_flavor_installation_to_dict_parser_test():
 
 
 def xml_flavor_collection_to_dict_parser_test():
-    payload = """<flavors>
-                     <flavor id="d1fb4620-f711-4393-b9f3-f2d476464daf">
-                         <name>hpc</name>
-                         <vcpus>16</vcpus>
-                         <ram>16384</ram>
-                         <disk>100</disk>
-                         <swap>0</swap>
-                         <promoted>false</promoted>
-                         <public>true</public>
-                         <node>SaoPaulo</node>
-                     </flavor>
-                     <flavor id="857dc211-e1f4-4cbe-b498-6847c14acb26">
-                         <name>my_flavor</name>
-                         <vcpus>2</vcpus>
-                         <ram>512</ram>
-                         <disk>3</disk>
-                         <swap>0</swap>
-                         <promoted>false</promoted>
-                         <public>false</public>
-                         <node>Mordor</node>
-                     </flavor>
-                 </flavors>"""
+    payload = util.load_xml_example_as_string('flavor_collection_response.xml')
+    payload = util.remove_xml_header(payload)
+    payload = util.remove_non_usable_characters(payload)
     factory = ParserFactory()
     type_factory = factory.get_parser(util.XML_MIMETYPE, FlavorCollection)
     
@@ -294,12 +227,9 @@ def xml_flavor_collection_to_dict_parser_test():
         assert 'Unrecognized mimetype or model type' in str(e)
 
 def xml_exception_to_dict_parser_test():
-    payload = """<error>
-                     <message>
-                         Error message
-                     </message>
-                 </error>"""
-    
+    payload = util.load_xml_example_as_string('exception_response.xml')
+    payload = util.remove_xml_header(payload)
+    payload = util.remove_non_usable_characters(payload)
     factory = ParserFactory()
     type_factory = factory.get_parser(util.XML_MIMETYPE, FlavorSyncError)
     
@@ -310,33 +240,7 @@ def xml_exception_to_dict_parser_test():
         assert 'Unrecognized mimetype or model type' in str(e)
 
 def json_flavor_collection_to_dict_parser_test():
-    payload = """{
-                     "flavors":[
-                         {
-                             "id":"d1fb4620-f711-4393-b9f3-f2d476464daf",
-                             "name":"hpc",
-                             "vcpus":16,
-                             "ram":16384,
-                             "disk":100,
-                             "swap":0,
-                             "promoted":false,
-                             "public":true,
-                             "nodes":["SaoPaulo"]
-                         },
-                         {
-                             "id":"857dc211-e1f4-4cbe-b498-6847c14acb26",
-                             "name":"my_flavor",
-                             "vcpus":2,
-                             "ram":512,
-                             "disk":3,
-                             "swap":0,
-                             "promoted":false,
-                             "public":false,
-                             "nodes":["Mordor"]
-                         }
-                     ]
-                 }"""
-    
+    payload = util.load_json_example_as_string('flavor_collection_response.json')
     factory = ParserFactory()
     type_factory = factory.get_parser(util.JSON_MIMETYPE, FlavorCollection)
     
@@ -347,11 +251,7 @@ def json_flavor_collection_to_dict_parser_test():
         assert 'Unrecognized mimetype or model type' in str(e)
     
 def json_exception_to_dict_parser_test():
-    payload = """{
-                     "error": {
-                         "message": "Error message"
-                     }
-                 }"""
+    payload = util.load_json_example_as_string('exception_response.json')
     
     factory = ParserFactory()
     type_factory = factory.get_parser(util.JSON_MIMETYPE, FlavorSyncError)
@@ -366,9 +266,9 @@ def json_exception_to_dict_parser_test():
 
 
 def xml_infrastructure_from_model_parser_test():
-    payload =  '<infrastructure>'
-    payload +=     '<name>Mordor</name>'
-    payload += '</infrastructure>'
+    payload = util.load_xml_example_as_string('infrastructure_response.xml')
+    payload = util.remove_xml_header(payload)
+    payload = util.remove_non_usable_characters(payload)
     
     infrastructure = Infrastructure('Mordor', 'http://11.22.33.44:8776/',
         'http://55.66.77.88:35357/', 'myUsername', 'myPassword', 'myTenant')
@@ -380,16 +280,9 @@ def xml_infrastructure_from_model_parser_test():
     assert response.decode("utf-8") in payload
     
 def xml_flavor_from_model_parser_test():
-    payload =  '<flavor id="567b200e-0aca-49e0-8e9a-8c1f6ad3abe2">'
-    payload +=     '<name>insane</name>'
-    payload +=     '<vcpus>640</vcpus>'
-    payload +=     '<ram>1232896</ram>'
-    payload +=     '<disk>1262485504</disk>'
-    payload +=     '<swap>0</swap>'
-    payload +=     '<promoted>false</promoted>'
-    payload +=     '<public>false</public>'
-    payload +=     '<node>Mordor</node>'
-    payload += '</flavor>'
+    payload = util.load_xml_example_as_string('flavor_response.xml')
+    payload = util.remove_xml_header(payload)
+    payload = util.remove_non_usable_characters(payload)
     
     infrastructure = Infrastructure('Mordor', 'http://11.22.33.44:8776/',
         'http://55.66.77.88:35357/', 'myUsername', 'myPassword', 'myTenant')
@@ -406,29 +299,9 @@ def xml_flavor_from_model_parser_test():
     assert response.decode("utf-8") in payload
     
 def xml_flavor_collection_from_model_parser_test():
-    payload =  '<?xml version="1.0" encoding="UTF-8"?>'
-    payload +=      '<flavors>'
-    payload +=          '<flavor id="d1fb4620-f711-4393-b9f3-f2d476464daf">'
-    payload +=              '<name>hpc</name>'
-    payload +=              '<vcpus>16</vcpus>'
-    payload +=              '<ram>16384</ram>'
-    payload +=              '<disk>100</disk>'
-    payload +=              '<swap>0</swap>'
-    payload +=              '<promoted>false</promoted>'
-    payload +=              '<public>true</public>'
-    payload +=              '<node>SaoPaulo</node>'
-    payload +=          '</flavor>'
-    payload +=          '<flavor id="857dc211-e1f4-4cbe-b498-6847c14acb26">'
-    payload +=              '<name>my_flavor</name>'
-    payload +=              '<vcpus>2</vcpus>'
-    payload +=              '<ram>512</ram>'
-    payload +=              '<disk>3</disk>'
-    payload +=              '<swap>0</swap>'
-    payload +=              '<promoted>false</promoted>'
-    payload +=              '<public>false</public>'
-    payload +=              '<node>Mordor</node>'
-    payload +=          '</flavor>'
-    payload +=      '</flavors>'
+    payload = util.load_xml_example_as_string('flavor_collection_response.xml')
+    payload = util.remove_xml_header(payload)
+    payload = util.remove_non_usable_characters(payload)
     
     saopaulo = Infrastructure('SaoPaulo', 'http://11.22.33.44:8776/',
         'http://55.66.77.88:35357/', 'myUsername', 'myPassword', 'myTenant')
@@ -466,11 +339,9 @@ def xml_empty_flavor_collection_from_model_parser_test():
     assert response.decode("utf-8") in payload
     
 def xml_error_from_model_parser_test():
-    payload =  '<error>'
-    payload +=      '<message>'
-    payload +=          'Error message'
-    payload +=      '</message>'
-    payload += '</error>'
+    payload = util.load_xml_example_as_string('exception_response.xml')
+    payload = util.remove_xml_header(payload)
+    payload = util.remove_non_usable_characters(payload)
     
     factory = ParserFactory()
     type_factory = factory.get_parser(util.XML_MIMETYPE, FlavorSyncError)
@@ -484,12 +355,7 @@ def xml_error_from_model_parser_test():
 
 
 def json_infrastructure_from_model_parser_test():
-    payload =  '{'
-    payload +=      '"infrastructure": {'
-    payload +=          '"name": "Mordor"'
-    payload +=      '}'
-    payload += '}'
-    
+    payload = util.load_json_from_file('infrastructure_response.json')
     infrastructure = Infrastructure('Mordor', 'http://11.22.33.44:8776/',
         'http://55.66.77.88:35357/', 'myUsername', 'myPassword', 'myTenant')
     
@@ -500,22 +366,7 @@ def json_infrastructure_from_model_parser_test():
     assert util.json_are_equal(response, payload)
     
 def json_flavor_from_model_parser_test():
-    payload =  '{'
-    payload +=     '"flavor": {'
-    payload +=         '"id":"567b200e-0aca-49e0-8e9a-8c1f6ad3abe2",'
-    payload +=         '"name":"insane",'
-    payload +=         '"vcpus":640,'
-    payload +=         '"ram":1232896,'
-    payload +=         '"disk":1262485504,'
-    payload +=         '"swap":0,'
-    payload +=         '"promoted":false,'
-    payload +=         '"public":false,'
-    payload +=         '"nodes":['
-    payload +=             '"Mordor"'
-    payload +=         ']'
-    payload +=     '}'
-    payload += '}'
-    
+    payload = util.load_json_from_file('flavor_response.json')
     infrastructure = Infrastructure('Mordor', 'http://11.22.33.44:8776/',
         'http://55.66.77.88:35357/', 'myUsername', 'myPassword', 'myTenant')
     
@@ -531,32 +382,7 @@ def json_flavor_from_model_parser_test():
     assert util.json_are_equal(response, payload)
     
 def json_flavor_collection_from_model_parser_test():
-    payload =  '{'
-    payload +=     '"flavors":['
-    payload +=         '{'
-    payload +=             '"id":"d1fb4620-f711-4393-b9f3-f2d476464daf",'
-    payload +=             '"name":"hpc",'
-    payload +=             '"vcpus":16,'
-    payload +=             '"ram":16384,'
-    payload +=             '"disk":100,'
-    payload +=             '"swap":0,'
-    payload +=             '"promoted":false,'
-    payload +=             '"public":true,'
-    payload +=             '"nodes":["SaoPaulo"]'
-    payload +=         '},'
-    payload +=         '{'
-    payload +=             '"id":"857dc211-e1f4-4cbe-b498-6847c14acb26",'
-    payload +=             '"name":"my_flavor",'
-    payload +=             '"vcpus":2,'
-    payload +=             '"ram":512,'
-    payload +=             '"disk":3,'
-    payload +=             '"swap":0,'
-    payload +=             '"promoted":false,'
-    payload +=             '"public":false,'
-    payload +=             '"nodes":["Mordor"]'
-    payload +=         '}'
-    payload +=     ']'
-    payload += '}'
+    payload = util.load_json_from_file('flavor_collection_response.json')
     
     saopaulo = Infrastructure('SaoPaulo', 'http://11.22.33.44:8776/',
         'http://55.66.77.88:35357/', 'myUsername', 'myPassword', 'myTenant')
@@ -593,11 +419,7 @@ def json_empty_flavor_collection_from_model_parser_test():
     assert util.json_are_equal(response, payload)
     
 def json_error_from_model_parser_test():
-    payload =  '{'
-    payload +=     '"error": {'
-    payload +=         '"message": "Error message"'
-    payload +=     '}'
-    payload += '}'
+    payload = util.load_json_from_file('exception_response.json')
     
     factory = ParserFactory()
     type_factory = factory.get_parser(util.JSON_MIMETYPE, FlavorSyncError)
