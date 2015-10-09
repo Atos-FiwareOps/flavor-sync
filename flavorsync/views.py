@@ -31,7 +31,7 @@ def register_infrastructure():
     content_type = request.content_type
     
     validator_factory = factory_selector.get_factory(content_type)
-    validator = validator_factory.createInfrastructureRequestValidator()
+    validator = validator_factory.create_infrastructure_request_validator()
     validator.validate(body)
     
     infrastructure = Infrastructure.deserialize(content_type, body)
@@ -68,7 +68,7 @@ def create_flavor():
     content_type = request.content_type
     
     validator_factory = factory_selector.get_factory(content_type)
-    validator = validator_factory.createFlavorRequestValidator()
+    validator = validator_factory.create_flavor_request_validator()
     validator.validate(body)
     
     flavor = Flavor.deserialize(content_type, body)
@@ -96,7 +96,7 @@ def publish_or_promote_flavor(flavor_id):
     content_type = request.content_type
     
     validator_factory = factory_selector.get_factory(content_type)
-    validator = validator_factory.createFlavorModificationRequestValidator()
+    validator = validator_factory.create_flavor_modification_request_validator()
     validator.validate(body)
     
     modified_flavor = Flavor.deserialize(content_type, request.data)
