@@ -3,7 +3,6 @@
     <xs:complexType name="infrastructureType">
         <xs:sequence>
             <xs:element type="xs:string" name="name" minOccurs="1" maxOccurs="1"/>
-            <xs:element type="xs:anyURI" name="nova_url" minOccurs="1" maxOccurs="1"/>
             <xs:element type="xs:anyURI" name="keystone_url" minOccurs="1" maxOccurs="1"/>
             <xs:element type="xs:string" name="username" minOccurs="1" maxOccurs="1"/>
             <xs:element type="xs:string" name="password" minOccurs="1" maxOccurs="1"/>

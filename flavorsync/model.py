@@ -20,16 +20,14 @@ class Infrastructure(db.Model, ParseableModel):
     __tablename__ = 'infrastructure'
     
     name = db.Column(db.String(30), primary_key = True)
-    nova_url = db.Column(db.String(30))
     keystone_url = db.Column(db.String(30))
     username = db.Column(db.String(20))
     password = db.Column(db.String(30))
     tenant = db.Column(db.String(20))
     
-    def __init__(self, name="", nova_url="", keystone_url="",
+    def __init__(self, name="", keystone_url="",
                 username="", password="", tenant=""):
         self.name = name
-        self.nova_url = nova_url
         self.keystone_url = keystone_url
         self.username = username
         self.password = password
@@ -43,7 +41,6 @@ class Infrastructure(db.Model, ParseableModel):
         infrastructure_dict = super(Infrastructure, cls).deserialize(mimetype, data)
         return Infrastructure(
                             infrastructure_dict['name'],
-                            infrastructure_dict['nova_url'], 
                             infrastructure_dict['keystone_url'],
                             infrastructure_dict['username'], 
                             infrastructure_dict['password'],

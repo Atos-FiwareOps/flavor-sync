@@ -1,7 +1,6 @@
 {
     "infrastructure": {
         "name": "Mordor",
-        "nova_url": "http://11.22.33.44:8776/",
         "keystone_url": "http://55.66.77.88:35357/",
         "username": "myUsername",
         "password": "myPassword",

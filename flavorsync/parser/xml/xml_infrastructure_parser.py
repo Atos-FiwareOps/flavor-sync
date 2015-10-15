@@ -9,7 +9,6 @@ class XMLInfrastructureParser(XMLParser):
         
         self.dict = {
                 "name" : str(obj.name),
-                "nova_url": str(obj.nova_url),
                 "keystone_url" : str(obj.keystone_url),
                 "username" : str(obj.username),
                 "password" : str(obj.password),

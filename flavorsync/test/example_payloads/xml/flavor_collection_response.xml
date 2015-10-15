@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flavors>
-    <flavor id="d1fb4620-f711-4393-b9f3-f2d476464daf">
+    <flavor id="567b200e-0aca-49e0-8e9a-8c1f6ad3abe2">
+        <name>insane</name>
+        <vcpus>640</vcpus>
+        <ram>1232896</ram>
+        <disk>1262485504</disk>
+        <swap>0</swap>
+        <promoted>false</promoted>
+        <public>false</public>
+        <node>Mordor</node>
+    </flavor>
+    <flavor id="857dc211-e1f4-4cbe-b498-6847c14acb26">
         <name>hpc</name>
         <vcpus>16</vcpus>
-        <ram>16384</ram>
+        <ram>5120</ram>
         <disk>100</disk>
         <swap>0</swap>
         <promoted>false</promoted>
         <public>true</public>
         <node>SaoPaulo</node>
-    </flavor>
-    <flavor id="857dc211-e1f4-4cbe-b498-6847c14acb26">
-        <name>my_flavor</name>
-        <vcpus>2</vcpus>
-        <ram>512</ram>
-        <disk>3</disk>
-        <swap>0</swap>
-        <promoted>false</promoted>
-        <public>false</public>
-        <node>Mordor</node>
     </flavor>
 </flavors>

@@ -1,29 +1,29 @@
 {
     "flavors":[
         {
-            "id":"d1fb4620-f711-4393-b9f3-f2d476464daf",
+            "id":"567b200e-0aca-49e0-8e9a-8c1f6ad3abe2",
+            "name":"insane",
+            "vcpus":640,
+            "ram":1232896,
+            "disk":1262485504,
+            "swap":0,
+            "promoted":false,
+            "public":false,
+            "nodes":[
+                "Mordor"
+            ]
+        },
+        {
+            "id":"857dc211-e1f4-4cbe-b498-6847c14acb26",
             "name":"hpc",
             "vcpus":16,
-            "ram":16384,
+            "ram":5120,
             "disk":100,
             "swap":0,
             "promoted":false,
             "public":true,
             "nodes":[
                 "SaoPaulo"
-            ]
-        },
-        {
-            "id":"857dc211-e1f4-4cbe-b498-6847c14acb26",
-            "name":"my_flavor",
-            "vcpus":2,
-            "ram":512,
-            "disk":3,
-            "swap":0,
-            "promoted":false,
-            "public":false,
-            "nodes":[
-                "Mordor"
             ]
         }
     ]

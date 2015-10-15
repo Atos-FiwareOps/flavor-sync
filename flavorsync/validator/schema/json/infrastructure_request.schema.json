@@ -11,10 +11,6 @@
                     "id": "name",
                     "type": "string"
                 },
-                "nova_url": {
-                    "id": "nova_url",
-                    "type": "string"
-                },
                 "keystone_url": {
                     "id": "keystone_url",
                     "type": "string"
@@ -34,7 +30,6 @@
             },
             "required": [
                 "name",
-                "nova_url",
                 "keystone_url",
                 "username",
                 "password",
