@@ -1,9 +1,9 @@
 {
     "infrastructure": {
         "name": "Mordor",
-        "keystone_url": "http://55.66.77.88:35357/",
-        "username": "myUsername",
-        "password": "myPassword",
-        "tenant": "myTenant"
+        "keystone_url": "{OPENSTACK_TEST_KEYSTONE_URL}",
+        "username": "{OPENSTACK_TEST_USERNAME}",
+        "password": "{OPENSTACK_TEST_PASSWORD}",
+        "tenant": "{OPENSTACK_TEST_TENANT}"
     }
 }

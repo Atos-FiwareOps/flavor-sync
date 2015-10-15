@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <infrastructure>
     <name>Mordor</name>
-    <keystone_url>http://55.66.77.88:35357/</keystone_url>
-    <username>myUsername</username>
-    <password>myPassword</password>
-    <tenant>myTenant</tenant>
+    <keystone_url>{OPENSTACK_TEST_KEYSTONE_URL}</keystone_url>
+    <username>{OPENSTACK_TEST_USERNAME}</username>
+    <password>{OPENSTACK_TEST_PASSWORD}</password>
+    <tenant>{OPENSTACK_TEST_TENANT}</tenant>
 </infrastructure>

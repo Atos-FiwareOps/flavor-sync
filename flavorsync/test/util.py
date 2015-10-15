@@ -1,6 +1,8 @@
 import json
 import re
 
+import flavorsync.test.config as config
+
 from lxml import etree, objectify
 from flavorsync.model import Infrastructure, Flavor, FlavorCollection
 
@@ -12,28 +14,40 @@ JSON_EXAMPLE_PAYLOADS_DIR = 'flavorsync/test/example_payloads/json/'
 XML_EXAMPLE_PAYLOADS_DIR = 'flavorsync/test/example_payloads/xml/'
 
 def load_xml_example_as_string(filename):
-    full_path = XML_EXAMPLE_PAYLOADS_DIR + filename
-    file = open(full_path, 'r')
-    payload = file.read()
-    file.close()
-    return payload
+    return _load_example_file_as_string(XML_EXAMPLE_PAYLOADS_DIR + filename)
 
 def load_json_example_as_string(filename):
-    full_path = JSON_EXAMPLE_PAYLOADS_DIR + filename
-    file = open(full_path, 'r')
+    return _load_example_file_as_string(JSON_EXAMPLE_PAYLOADS_DIR + filename)
+
+def _load_example_file_as_string(file_path):
+    file = open(file_path, 'r')
     payload = file.read()
     file.close()
+    
+    if 'infrastructure_request' in file_path:
+        payload = payload.replace("{OPENSTACK_TEST_KEYSTONE_URL}",
+                                  config.OPENSTACK_TEST_KEYSTONE_URL)
+        payload = payload.replace("{OPENSTACK_TEST_USERNAME}",
+                                  config.OPENSTACK_TEST_USERNAME)
+        payload = payload.replace("{OPENSTACK_TEST_PASSWORD}",
+                                  config.OPENSTACK_TEST_PASSWORD)
+        payload = payload.replace("{OPENSTACK_TEST_TENANT}",
+                                  config.OPENSTACK_TEST_TENANT)
+    
     return payload
 
 def load_xml_from_file(filename):
-    full_path = XML_EXAMPLE_PAYLOADS_DIR + filename
+    contents = load_clean_xml_payload(filename)
+    root = objectify.fromstring(contents)
+    return root
+    #full_path = XML_EXAMPLE_PAYLOADS_DIR + filename
     
-    with open(full_path) as payload_file:
-        data = objectify.parse(payload_file)
+    #with open(full_path) as payload_file:
+    #    data = objectify.parse(payload_file)
     
-    root = data.getroot()
+    #root = data.getroot()
     
-    return etree.tostring(root).decode('utf-8')
+    #return etree.tostring(root).decode('utf-8')
 
 def load_clean_xml_payload(filename):
     payload = load_xml_example_as_string(filename)
@@ -43,10 +57,8 @@ def load_clean_xml_payload(filename):
     return payload
 
 def load_json_from_file(filename):
-    full_path = JSON_EXAMPLE_PAYLOADS_DIR + filename
-    
-    with open(full_path) as payload_file:
-        data = json.load(payload_file)
+    contents = load_json_example_as_string(filename)
+    data = json.loads(contents)
     
     return data
 
@@ -81,8 +93,11 @@ def _order_json_data(obj):
         return obj
        
 def create_example_infrastructure():
-    return Infrastructure('Mordor', 'http://55.66.77.88:35357/',
-                          'myUsername', 'myPassword', 'myTenant')
+    return Infrastructure('Mordor',
+                          config.OPENSTACK_TEST_KEYSTONE_URL,
+                          config.OPENSTACK_TEST_USERNAME,
+                          config.OPENSTACK_TEST_PASSWORD,
+                          config.OPENSTACK_TEST_TENANT)
 
 def _create_secondary_example_infrastructure():
     return Infrastructure('SaoPaulo', 'http://55.66.77.88:35357/',

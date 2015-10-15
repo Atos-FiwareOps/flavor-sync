@@ -6,7 +6,7 @@ from novaclient.v2.flavors import Flavor as OpenStackFlavor
 from flavorsync.model import Infrastructure, Flavor, FlavorCollection
 
 def deserialize_xml_infrastructure_test():
-    data = util.load_xml_from_file('infrastructure_request.xml')
+    data = util.load_clean_xml_payload('infrastructure_request.xml')
     infrastructure = Infrastructure.deserialize(util.XML_MIMETYPE, data)
     _check_infrastructure_model_contents(infrastructure)
 
@@ -26,7 +26,7 @@ def deserialize_wrong_mimetype_infrastructure_test():
     
     
 def serialize_xml_infrastructure_test():
-    data = util.load_xml_from_file('infrastructure_response.xml')
+    data = util.load_clean_xml_payload('infrastructure_response.xml')
     
     infrastructure = util.create_example_infrastructure()
     
@@ -63,7 +63,7 @@ def infrastructure_to_dict_test():
 
 
 def deserialize_xml_flavor_test():
-    data = util.load_xml_from_file('flavor_creation_request.xml')
+    data = util.load_clean_xml_payload('flavor_creation_request.xml')
     flavor = Flavor.deserialize(util.XML_MIMETYPE, data)
     _check_flavor_model_contents(flavor)
 
@@ -82,7 +82,7 @@ def deserialize_wrong_mimetype_flavor_test():
         assert 'Unrecognized mimetype or model type' in str(e)
     
 def serialize_xml_flavor_test():
-    data = util.load_xml_from_file('flavor_response.xml')
+    data = util.load_clean_xml_payload('flavor_response.xml')
     
     flavor = util.create_example_flavor()
     
@@ -136,7 +136,7 @@ def from_openstack_flavor_test():
 
 
 def serialize_xml_flavor_collection_test():
-    data = util.load_xml_from_file('flavor_collection_response.xml')
+    data = util.load_clean_xml_payload('flavor_collection_response.xml')
     
     flavor_collection = util.create_example_flavor_collection()
     
