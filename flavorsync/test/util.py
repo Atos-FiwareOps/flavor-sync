@@ -40,14 +40,6 @@ def load_xml_from_file(filename):
     contents = load_clean_xml_payload(filename)
     root = objectify.fromstring(contents)
     return root
-    #full_path = XML_EXAMPLE_PAYLOADS_DIR + filename
-    
-    #with open(full_path) as payload_file:
-    #    data = objectify.parse(payload_file)
-    
-    #root = data.getroot()
-    
-    #return etree.tostring(root).decode('utf-8')
 
 def load_clean_xml_payload(filename):
     payload = load_xml_example_as_string(filename)
