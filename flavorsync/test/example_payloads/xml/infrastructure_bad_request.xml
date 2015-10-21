@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<infrastructure>
+    <name>Mordor</name>
+    <username>{OPENSTACK_TEST_USERNAME}</username>
+    <password>{OPENSTACK_TEST_PASSWORD}</password>
+    <tenant>{OPENSTACK_TEST_TENANT}</tenant>
+</infrastructure>

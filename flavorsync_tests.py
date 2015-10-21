@@ -2,8 +2,14 @@ import os
 import flavorsync
 import unittest
 import tempfile
+import flavorsync.views
+import flavorsync.test.config as config
 
-from flavorsync.test import parser_unit_tests, model_unit_tests, validation_unit_tests
+from flavorsync.test import parser_unit_tests, model_unit_tests, validation_unit_tests,\
+    use_case_tests
+from flavorsync import database
+from flavorsync.openstack.openstack_manager import OpenStackManager
+from flavorsync.model import Infrastructure
 
 
 class flavorsyncTestCase(unittest.TestCase):
@@ -295,6 +301,93 @@ class flavorsyncTestCase(unittest.TestCase):
     
     def test_validate_json_infrastructure_payload(self):
         validation_unit_tests.validate_json_infrastructure_payload(self)
+
+class flavorsyncTestCase2(unittest.TestCase):
+
+    def setUp(self):
+        self.db_fd, flavorsync.app.config['DB_TEST_URI'] = tempfile.mkstemp()
+        flavorsync.app.config['TESTING'] = True
+        self.app = flavorsync.app.test_client()
+        
+        with flavorsync.app.app_context():
+             database.init_db(flavorsync.app)
+
+    def tearDown(self):
+        try:
+            flavor_id = self.flavor_id
+            infrastructure = Infrastructure(
+                                    'Mordor',
+                                    config.OPENSTACK_TEST_KEYSTONE_URL,
+                                    config.OPENSTACK_TEST_USERNAME,
+                                    config.OPENSTACK_TEST_PASSWORD,
+                                    config.OPENSTACK_TEST_TENANT)
+            openstackmanager = OpenStackManager(infrastructure)
+            openstackmanager.delete_flavor(flavor_id)
+        except AttributeError:
+        	pass
+        
+        os.close(self.db_fd)
+        os.unlink(flavorsync.app.config['DB_TEST_URI'])
+    
+    def test_register_and_unregister_infrastucture(self):
+        use_case_tests.infrastructure_on_line_test(self.app)
+        use_case_tests.register_new_infrastucture_xml_test(self.app)
+        use_case_tests.unregister_infrastucture_test(self.app)
+        use_case_tests.register_new_infrastucture_json_test(self.app)
+        use_case_tests.unregister_infrastucture_test(self.app)
+    
+    def test_list_flavors(self):
+        use_case_tests.infrastructure_on_line_test(self.app)
+        use_case_tests.register_new_infrastucture_xml_test(self.app)
+        use_case_tests.unregister_infrastucture_test(self.app)
+        use_case_tests.register_new_infrastucture_json_test(self.app)
+        use_case_tests.list_all_flavors_xml_test(self.app)
+        use_case_tests.list_all_flavors_json_test(self.app)
+    
+    def test_create_and_delete_flavors(self):
+        use_case_tests.infrastructure_on_line_test(self.app)
+        use_case_tests.register_new_infrastucture_xml_test(self.app)
+        use_case_tests.unregister_infrastucture_test(self.app)
+        use_case_tests.register_new_infrastucture_json_test(self.app)
+        flavor_id = use_case_tests.create_new_flavor_xml_test(self.app)
+        use_case_tests.list_all_flavors_xml_test(self.app,flavor_id)
+        use_case_tests.list_all_flavors_json_test(self.app,flavor_id)
+        use_case_tests.delete_flavor_test(self.app, flavor_id)
+        flavor_id = use_case_tests.create_new_flavor_json_test(self.app)
+        use_case_tests.list_all_flavors_xml_test(self.app,flavor_id)
+        use_case_tests.list_all_flavors_json_test(self.app,flavor_id)
+        use_case_tests.get_flavor_info_xml_test(self.app, flavor_id)
+        use_case_tests.get_flavor_info_json_test(self.app, flavor_id)
+        use_case_tests.delete_flavor_test(self.app, flavor_id)
+        use_case_tests.unregister_infrastucture_test(self.app)
+    
+    def test_publish_and_promote_flavor_xml(self):
+        use_case_tests.infrastructure_on_line_test(self.app)
+        use_case_tests.register_new_infrastucture_xml_test(self.app)
+        self.flavor_id = use_case_tests.create_new_flavor_xml_test(self.app)
+        use_case_tests.publish_flavor_xml_test(self.app, self.flavor_id)
+        use_case_tests.promote_flavor_xml_test(self.app, self.flavor_id)
+    
+    def test_publish_and_promote_flavor_json(self):
+        use_case_tests.infrastructure_on_line_test(self.app)
+        use_case_tests.register_new_infrastucture_json_test(self.app)
+        self.flavor_id = use_case_tests.create_new_flavor_json_test(self.app)
+        use_case_tests.publish_flavor_json_test(self.app, self.flavor_id)
+        use_case_tests.promote_flavor_json_test(self.app, self.flavor_id)
+    
+    def test_install_flavor_xml(self):
+        use_case_tests.infrastructure_on_line_test(self.app)
+        use_case_tests.register_new_infrastucture_xml_test(self.app)
+        self.flavor_id = use_case_tests.install_flavor_xml_test(self.app)
+        use_case_tests.list_all_flavors_xml_test(self.app, self.flavor_id)
+        use_case_tests.list_all_flavors_json_test(self.app, self.flavor_id)
+    
+    def test_install_flavor_json(self):
+        use_case_tests.infrastructure_on_line_test(self.app)
+        use_case_tests.register_new_infrastucture_json_test(self.app)
+        self.flavor_id = use_case_tests.install_flavor_json_test(self.app)
+        use_case_tests.list_all_flavors_xml_test(self.app, self.flavor_id)
+        use_case_tests.list_all_flavors_json_test(self.app, self.flavor_id)
 
 if __name__ == '__main__':
     unittest.main()

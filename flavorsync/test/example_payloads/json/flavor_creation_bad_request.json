@@ -1,0 +1,8 @@
+{
+    "flavor": {
+        "name":"insane",
+        "vcpus":640,
+        "disk":1262485504,
+        "swap":0
+    }
+}

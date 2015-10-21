@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flavor>
+    <name>insane</name>
+    <vcpus>640</vcpus>
+    <disk>1262485504</disk>
+    <swap>0</swap>
+</flavor>

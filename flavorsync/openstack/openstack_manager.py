@@ -18,7 +18,10 @@ class OpenStackManager():
         return flavors
     
     def create_flavor(self, flavor):
-        flavor_id = uuid4()
+        try:
+            flavor_id = flavor.id
+        except AttributeError:
+            flavor_id = uuid4()
         nova_client = self._create_nova_client()
         
         try:
@@ -53,6 +56,8 @@ class OpenStackManager():
             nova_client.flavors.delete(flavor_id)
         except ConnectionRefused:
             raise OpenStackConnectionError()
+        except NotFound:
+            raise FlavorNotFoundExceptionError(flavor_id)
     
     def _create_nova_client(self):
         nova_api_version = 2

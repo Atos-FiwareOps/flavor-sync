@@ -1,0 +1,8 @@
+{
+    "infrastructure": {
+        "name": "Mordor",
+        "username": "{OPENSTACK_TEST_USERNAME}",
+        "password": "{OPENSTACK_TEST_PASSWORD}",
+        "tenant": "{OPENSTACK_TEST_TENANT}"
+    }
+}

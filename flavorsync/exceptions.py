@@ -38,7 +38,7 @@ class InfrastructureBadRequestError(FlavorSyncError):
         super(InfrastructureBadRequestError, self).__init__(message, self.status_code)
         
 class InfrastructureNotFoundError(FlavorSyncError):
-    status_code = 400
+    status_code = 404
     
     def __init__(self, infrastructure_id):
         message = "The infrastructure {0} does not exist".format(infrastructure_id)
