@@ -1,0 +1,603 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# Fiware ops flavor synchronizer
+
+This API should implement the functionalities to cover the following
+requirements:
+
+1. An infrastructure operator registers his infrastructure in the flavor
+sync tool (implemented by
+[Register a new infrastucture](#post-%2Fv1%2Finfrastructures)).
+2. An infrastructure operator lists all the available flavors in his
+infrastructures (implemented by [List all flavors](#get-%2Fv1%2Fflavors{%3Fpromoted}{%3Fpublic})).
+3. An infrastructure operator gets the details of one of the flavors in his
+infrastructure  (implemented by [Get flavor info](#get-%2Fv1%2Fflavors%2F{id})).
+4. An infrastructure operator creates a new flavor in his infrastructure
+ (implemented by [Create a new flavor](#post-%2Fv1%2Fflavors{%3Fpromoted}{%3Fpublic})).
+5. An infrastructure operator updates a new flavor in his infrastructure
+ (implemented by [Modify an existing flavor](#put-%2Fv1%2Fflavors%2F{id})).
+6. An infrastructure operator deletes a new flavor in his infrastructure
+ (implemented by [Delete flavor](#delete-%2Fv1%2Fflavors%2F{id})).
+7. An infrastructure operator gets a list of the “promoted” flavors
+ (implemented by [List all flavors](#get-%2Fv1%2Fflavors{%3Fpromoted}{%3Fpublic})).
+8. An infrastructure operator gets a list of the public flavors
+ (implemented by [List all flavors](#get-%2Fv1%2Fflavors{%3Fpromoted}{%3Fpublic})).
+9. An infrastructure operator “installs” one of the public flavors into his
+infrastructure (implemented by
+[Modify an existing flavor](#put-%2Fv1%2Fflavors%2F{id})).
+10. An infrastructure operator publishes one of his private flavors
+ (implemented by [Modify an existing flavor](#put-%2Fv1%2Fflavors%2F{id})).
+11. A Fiware operator makes promotes one of the public
+ (implemented by [Modify an existing flavor](#put-%2Fv1%2Fflavors%2F{id})).
+
+
+# Group Infrastructures
+
+## Infrastructure Collection [/v1/infrastructures]
+
+### Register a new infrastucture [POST]
+
+Allows to create a new infrastructure. It takes a XML or JSON body containing
+the name, endpoint url of nova.
+
++ name (string) - The name of the of the infrastructure
++ nova_url (string) - URL where the Nova API can be reached
++ keystone_url (string) - URL where the Keystone API can be reached
++ username (string) - Username for authenticating in Keystone
++ password (string) - Password for authenticating in Keystone
++ tenant (string) - Tenant name to be managed
+
++ Request (application/xml)
+
+    + headers
+    
+            user: basic authentication user
+            password: basic authentication password
+
+    + body
+            
+            <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+            <infrastructure>
+                <name>Mordor</name>
+                <nova_url>http://11.22.33.44:8776/</nova_url>
+                <keystone_url>http://55.66.77.88:35357/</keystone_url>
+                <username>myUsername</username>
+                <password>myPassword</password>
+                <tenant>myTenant</tenant>
+            </infrastructure>
+
++ Response 201 (application/xml)
+
+    + Body
+
+            <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+            <infrastructure>
+                <name>Mordor</name>
+            </infrastructure>
+
++ Request (application/json)
+
+    + headers
+    
+            user: basic authentication user
+            password: basic authentication password
+
+    + body
+            
+            {
+                "infrastructure": {
+                    "name": "Mordor",
+                    "nova_url": "http://11.22.33.44:8776/",
+                    "keystone_url": "http://55.66.77.88:35357/",
+                    "username": "myUsername",
+                    "password": "myPassword",
+                    "tenant": "myTenant"
+                }
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "infrastructure": {
+                    "name":"Mordor"
+                }
+            }
+
++ Response 400
+
+        Returned when incorrect data has been suplied.
+
++ Response 409
+
+        Returned when the uuid or name already exists in the database.
+
+## Infrastructure [/v1/infrastructures/{id}]
+
+### Unregister infrastructure [DELETE]
+
++ Parameters
+
+    + id (string) - Id of the infrastructure
+
++ Request
+
+    + Headers
+    
+            user: basic authentication user
+            password: basic authentication password
+
++ Response 204
++ Response 404
+
+        Returned when the given uuid doesn't exist in the database.
+
++ Response 409
+
+        Returned when the infrastructure is still being used.
+
+# Group Flavors
+
+## Flavors Collection [/v1/flavors{?promoted}{?public}]
+
+### List all flavors [GET]
+
+This operations allows to get all the registered flavors.
+
+
++ Parameters
+
+    + promoted (optional, boolean) - If true retrieves only the promoted flavors.
+    + public (optional, boolean) - Retrieve only the public or private flavors.
+
++ Request
+
+    + Headers
+    
+            user: basic authentication user
+            password: basic authentication password
+
++ Response 200 (application/xml)
+
+    + Body
+            
+            <?xml version="1.0" encoding="UTF-8"?>
+            <flavors>
+                <flavor id="82375e8c-9b4c-4e7c-9495-c0205c8622d2">
+                    <name>tiny</name>
+                    <vcpus>1</vcpus>
+                    <ram>512</ram>
+                    <disk>1</disk>
+                    <swap>0</swap>
+                    <promoted>true</promoted>
+                    <public>true</public>
+                    <node>SaoPaulo</node>
+                    <node>Karlskrona2</node>
+                    <node>Lannion</node>
+                    <node>SophiaAntipolis</node>
+                    <node>Mexico</node>
+                    <node>Waterford</node>
+                    <node>Poznan</node>
+                    <node>PiraeusU</node>
+                    <node>Crete</node>
+                    <node>PiraeusN</node>
+                    <node>Stockholm2</node>
+                    <node>Zurich</node>
+                    <node>Budapest2</node>
+                    <node>Berlin2</node>
+                    <node>Prague</node>
+                    <node>Volos</node>
+                    <node>Gent</node>
+                    <node>Trento</node>
+                    <node>Spain2</node>
+                </flavor>
+                <flavor id="e3b0f0a4-ea03-428b-97c6-8a06fd62b014">
+                    <name>medium</name>
+                    <vcpus>2</vcpus>
+                    <ram>1024</ram>
+                    <disk>1</disk>
+                    <swap>0</swap>
+                    <promoted>false</promoted>
+                    <public>true</public>
+                    <node>Waterford</node>
+                    <node>Poznan</node>
+                    <node>Crete</node>
+                    <node>Stockholm2</node>
+                    <node>Budapest2</node>
+                    <node>Berlin2</node>
+                    <node>Volos</node>
+                </flavor>
+                <flavor id="d1fb4620-f711-4393-b9f3-f2d476464daf">
+                    <name>hpc</name>
+                    <vcpus>16</vcpus>
+                    <ram>16384</ram>
+                    <disk>100</disk>
+                    <swap>0</swap>
+                    <promoted>false</promoted>
+                    <public>true</public>
+                    <node>SaoPaulo</node>
+                    <node>Spain2</node>
+                </flavor>
+                <flavor id="857dc211-e1f4-4cbe-b498-6847c14acb26">
+                    <name>my_flavor</name>
+                    <vcpus>2</vcpus>
+                    <ram>512</ram>
+                    <disk>3</disk>
+                    <swap>0</swap>
+                    <promoted>false</promoted>
+                    <public>false</public>
+                    <node>Mordor</node>
+                </flavor>
+            </flavors>
+        
+        
++ Response 200 (application/json)
+
+    + Body
+            
+            {
+                "flavors":[
+                    {
+                        "id":"82375e8c-9b4c-4e7c-9495-c0205c8622d2",
+                        "name":"tiny",
+                        "vcpus":1,
+                        "ram":512,
+                        "disk":1,
+                        "swap":0,
+                        "promoted":true,
+                        "public":true,
+                        "nodes":[
+                            "SaoPaulo",
+                            "Karlskrona2",
+                            "Lannion",
+                            "SophiaAntipolis",
+                            "Mexico",
+                            "Waterford",
+                            "Poznan",
+                            "PiraeusU",
+                            "Crete",
+                            "PiraeusN",
+                            "Stockholm2",
+                            "Zurich",
+                            "Budapest2",
+                            "Berlin2",
+                            "Prague",
+                            "Volos",
+                            "Gent",
+                            "Trento",
+                            "Spain2"
+                        ]
+                    },
+                    {
+                        "id":"e3b0f0a4-ea03-428b-97c6-8a06fd62b014",
+                        "name":"medium",
+                        "vcpus":2,
+                        "ram":1024,
+                        "disk":1,
+                        "swap":0,
+                        "promoted":false,
+                        "public":true,
+                        "nodes":[
+                            "Waterford",
+                            "Poznan",
+                            "Crete",
+                            "Stockholm2",
+                            "Budapest2",
+                            "Berlin2",
+                            "Volos"
+                        ]
+                    },
+                    {
+                        "id":"d1fb4620-f711-4393-b9f3-f2d476464daf",
+                        "name":"hpc",
+                        "vcpus":16,
+                        "ram":16384,
+                        "disk":100,
+                        "swap":0,
+                        "promoted":false,
+                        "public":true,
+                        "nodes":[
+                            "SaoPaulo",
+                            "Spain2"
+                        ]
+                    },
+                    {
+                        "id":"857dc211-e1f4-4cbe-b498-6847c14acb26",
+                        "name":"my_flavor",
+                        "vcpus":2,
+                        "ram":512,
+                        "disk":3,
+                        "swap":0,
+                        "promoted":false,
+                        "public":false,
+                        "nodes":[
+                            "Mordor"
+                        ]
+                    }
+                ]
+            }
+
++ Response 502
+
+        Returned when the OpenStack infrastructure is not reachable.
+
+### Create a new flavor [POST]
+
+Allows to create a new flavor. It takes an XML or JSON body the description
+of the flavor characteristics:
+
++ name (string) - The name of the new flavor
++ vcpus (int) - The number of CPUs for the VMs based on this flavor
++ ram (int) - The amount of RAM in megabytes for the VMs based on this flavor
++ disk (int) - The amount of disk space in gigabytes for the VMs based on this flavor
++ swap (int) - The amount of swap space in megabytes for the VMs based on this flavor
++ public (boolean, optional) - Make the flavor public in the flavor sync tool.
+
++ Request (application/xml)
+
+    + headers
+    
+            user: basic authentication user
+            password: basic authentication password
+
+    + body
+    
+            <?xml version="1.0" encoding="UTF-8"?>
+            <flavor>
+                <name>insane</name>
+                <vcpus>640</vcpus>
+                <ram>1232896</ram>
+                <disk>1262485504</disk>
+                <swap>0</swap>
+            </flavor>
+
+
++ Response 201 (application/xml)
+
+    + Body
+
+            <?xml version="1.0" encoding="UTF-8"?>
+            <flavor id="567b200e-0aca-49e0-8e9a-8c1f6ad3abe2">
+                <name>insane</name>
+                <vcpus>640</vcpus>
+                <ram>1232896</ram>
+                <disk>1262485504</disk>
+                <swap>0</swap>
+                <promoted>false</promoted>
+                <public>false</public>
+                <node>Mordor</node>
+            </flavor>
+
++ Request (application/json)
+
+    + headers
+    
+            user: basic authentication user
+            password: basic authentication password
+
+    + body
+            
+            {
+                "flavor": {
+                    "name":"insane",
+                    "vcpus":640,
+                    "ram":1232896,
+                    "disk":1262485504,
+                    "swap":0
+                }
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "flavor": {
+                    "id":"567b200e-0aca-49e0-8e9a-8c1f6ad3abe2",
+                    "name":"insane",
+                    "vcpus":640,
+                    "ram":1232896,
+                    "disk":1262485504,
+                    "swap":0,
+                    "promoted":false,
+                    "public":false,
+                    "nodes":[
+                        "Mordor"
+                    ]
+                }
+            }
+
++ Response 400
+
+        Returned when incorrect data has been suplied.
+
++ Response 409
+
+        Returned when the name already exists in the database.
+        
++ Response 502
+
+        Returned when the OpenStack infrastructure is not reachable.
+
+## Flavor [/v1/flavors/{id}]
+
+### Get flavor info [GET]
+
++ Parameters
+
+    + id (string) - Id of the flavor
+
++ Request
+
+    + Headers
+    
+            user: basic authentication user
+            password: basic authentication password
+
++ Response 200 (application/xml)
+
+    + Body
+
+            <?xml version="1.0" encoding="UTF-8"?>
+            <flavor id="567b200e-0aca-49e0-8e9a-8c1f6ad3abe2">
+                <name>insane</name>
+                <vcpus>640</vcpus>
+                <ram>1232896</ram>
+                <disk>1262485504</disk>
+                <swap>0</swap>
+                <promoted>false</promoted>
+                <public>false</public>
+                <node>Mordor</node>
+            </flavor>
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "flavor": {
+                    "id":"567b200e-0aca-49e0-8e9a-8c1f6ad3abe2",
+                    "name":"insane",
+                    "vcpus":640,
+                    "ram":1232896,
+                    "disk":1262485504,
+                    "swap":0,
+                    "promoted":false,
+                    "public":false,
+                    "nodes":[
+                        "Mordor"
+                    ]
+                }
+            }
+
++ Response 404
+
+        Returned when the object is not in the database.
+
++ Response 502
+
+        Returned when the OpenStack infrastructure is not reachable.
+
+### Modify an existing flavor [PUT]
+
+Updates the flavor identified by the id. The allowed changes refers to its 
+public and promoted parameters. Any infrastructure owner will be able to publish
+his images, but superadmin privileges will be needed for promoting them. Once
+the flavor has been published, it cannot be unpublished.
+
+It also allows to install a public flavor in a new infrastructure.
+
++ promoted (optional boolean) - Promote the flavor in the flavor sync tool.
++ public (optional, boolean) - Make the flavor public in the flavor sync tool.
++ nodes (optional, array[string]) - Single list with the nodes to install the flavor in
+
++ Parameters
+
+    + id (string) - Id of the flavor
+
++ Request (application/xml)
+
+    + headers
+    
+            user: basic authentication user
+            password: basic authentication password
+
+    + body
+            
+            <?xml version="1.0" encoding="UTF-8"?>
+            <flavor>
+                <node>Mordor</node>
+            </flavor>
+
++ Response 200 (application/xml)
+
+    + Body
+
+            <?xml version="1.0" encoding="UTF-8"?>
+            <flavor id="d1fb4620-f711-4393-b9f3-f2d476464daf">
+                <name>hpc</name>
+                <vcpus>16</vcpus>
+                <ram>16384</ram>
+                <disk>100</disk>
+                <swap>0</swap>
+                <promoted>false</promoted>
+                <public>true</public>
+                <node>SaoPaulo</node>
+                <node>Spain2</node>
+                <node>Mordor</node>
+            </flavor>
+
++ Request (application/json)
+
+    + headers
+    
+            user: basic authentication user
+            password: basic authentication password
+
+    + body
+            
+            {
+                "flavor": {
+                    "nodes":["Mordor"]
+                }
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "flavor": {
+                    "id":"d1fb4620-f711-4393-b9f3-f2d476464daf",
+                    "name":"hpc",
+                    "vcpus":16,
+                    "ram":16384,
+                    "disk":100,
+                    "swap":0,
+                    "promoted":false,
+                    "public":true,
+                    "nodes":[
+                        "SaoPaulo",
+                        "Spain2",
+                        "Mordor"
+                    ]
+                }
+            }
+
++ Response 400
+
+        Returned when incorrect data has been suplied.
+
++ Response 401
+
+        Returned when a user has not privileges to promote a flavor.
+
++ Response 404
+
+        Returned when the object with the id is not in the database.
+
++ Response 409
+
+        Returned when the node to publish on is not found in the database.
+        Returned when trying to unpublish a flavor.
+        
++ Response 502
+
+        Returned when the OpenStack infrastructure is not reachable.
+
+### Delete flavor [DELETE]
+
++ Parameters
+
+    + id (string) - Id of the flavor.
+
++ Response 204
++ Response 404
+
+        Returned when the given id doesn't exist in the database.
+
++ Response 502
+
+        Returned when the OpenStack infrastructure is not reachable.
