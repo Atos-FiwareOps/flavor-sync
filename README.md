@@ -367,11 +367,625 @@ Note: there is an [Apiary version](http://docs.fiwareflavorsync.apiary.io/)
 of this page with a more readable and structured format, as well as a
 mock server to perform some tests at.
 
-### Group Infrastructures
+# Group Promoted flavors
 
-#### Infrastructure Collection [/v1/infrastructures]
+It is only necessary one token (X-Auth-Token). This token identifies the user as a member of Fiware Lab ecosystem and it includes the necessary role (InfrastructureManager) for managing promoted flavors (create, modify and remove).
+In this case, it is not necessary the token (X-Auth-Token-KeyStone), since the system doesn’t connect with the OpenStack node.
 
-##### Register a new infrastucture [POST]
+
+## Promoted Flavors Collection [/v1/promotedflavors]
+
+### List all promoted flavors [GET]
+
+This operations allows to get all the promoted flavors.
+
++ Request
+    + Headers
+    
+            X-Auth-Token: <token provided by FIWARE IdM>
+            Accept:application/json
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "flavors": [
+                    {
+                        "disk": 10,
+                        "id": "4432332",
+                        "name": "TestNano",
+                        "nodes": [],
+                        "promoted": true,
+                        "public": true,
+                        "ram": 2,
+                        "swap": 0,
+                        "vcpus": 1
+                    },
+                    {
+                        "disk": 10,
+                        "id": "cfff326d-aecc-4cae-bc4e-a901f9b73c69",
+                        "name": "TestNano3",
+                        "nodes": [],
+                        "promoted": true,
+                        "public": true,
+                        "ram": 2,
+                        "swap": 0,
+                        "vcpus": 1
+                    },
+                    {
+                        "disk": 10,
+                        "id": "d75edfb2-6165-4f72-8fa9-09da5b537708",
+                        "name": "TestNano2",
+                        "nodes": [],
+                        "promoted": true,
+                        "public": true,
+                        "ram": 2,
+                        "swap": 0,
+                        "vcpus": 1
+                    }
+                ]
+            }
+  
+
++ Response 401 (text/plain)
+    
+    UNAUTHORIZED, returned when incorrect IdM token has been provided. 
+
+    + Body
+            
+            Could not verify your access level for that URL. You have to login with proper token
+
+
+### Create a new promoted flavor [POST]
+
+Allows to create a new promoted flavor. It takes an XML or JSON body the description
+of the flavor characteristics:
+
++ name (string) - The name of the new flavor
++ vcpus (int) - The number of CPUs for the VMs based on this flavor
++ ram (int) - The amount of RAM in megabytes for the VMs based on this flavor
++ disk (int) - The amount of disk space in gigabytes for the VMs based on this flavor
++ swap (int) - The amount of swap space in megabytes for the VMs based on this flavor
+
+
++ Request (application/json)
+
+    + headers
+    
+            X-Auth-Token: <token provided by FIWARE IdM>
+            Accept:application/json
+
+    + body
+            
+            {
+                "flavor": {
+                    "name":"TestNano",
+                    "vcpus":1,
+                    "ram":2,
+                    "disk":10,
+                    "swap":0
+                }
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "flavor": {
+                    "disk": 10,
+                    "id": "cfff326d-aecc-4cae-bc4e-a901f9b73c69",
+                    "name": "TestNano",
+                    "nodes": [],
+                    "promoted": true,
+                    "public": true,
+                    "ram": 2,
+                    "swap": 0,
+                    "vcpus": 1
+                }
+            }
+
+
++ Response 400
+
+        Returned when incorrect data has been suplied.
+
++ Response 409
+
+        Returned when the name already exists in the database.
+        
++ Response 401 (text/plain)
+    
+    UNAUTHORIZED, returned when incorrect IdM token has been provided. 
+
+    + Body
+            
+            Could not verify your access level for that URL. You have to login with proper token
+
++ Response 405 (text/plain)
+    
+    Method not allowed, returned when the user doesn't have rigth access to this resources.
+    
+    + Body
+    
+            The method specified in the Request-Line is not allowed for the resource identified by the Request-URI.
+
+
+
+
+## Promoted Flavor [/v1/promotedflavors/{id}]
+
+### Get promoted flavor info [GET]
+
+Allows to get the details of a promoted flavor.
+
++ Parameters
+
+    + id (string) - Id of the promoted flavor
+
++ Request
+
+    + Headers
+    
+            X-Auth-Token: <token provided by FIWARE IdM>
+            Accept:application/json
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "flavor": {
+                    "disk": 10,
+                    "id": "cfff326d-aecc-4cae-bc4e-a901f9b73c69",
+                    "name": "TestNano",
+                    "nodes": [],
+                    "promoted": true,
+                    "public": true,
+                    "ram": 2,
+                    "swap": 0,
+                    "vcpus": 1
+                }
+            }
+
+
++ Response 404
+
+        Returned when the object is not in the database.
+
++ Response 404
+
+        Returned when the flavor is not promoted.
+
++ Response 401 (text/plain)
+    
+        UNAUTHORIZED, returned when incorrect IdM token has been provided. 
+
+
+### Delete promoted flavor [DELETE]
+
+Allows to delete a promoted flavor.
+
+
++ Parameters
+
+    + id (string) - Id of the promoted flavor.
++ Request
+    + Headers
+    
+            X-Auth-Token: <token provided by FIWARE IdM>
+
++ Response 204
++ Response 404
+
+        Returned when the given id doesn't exist in the database.
+
++ Response 405
+
+        Returned when the flavor is not promoted or there are nodes associated to the flavor
+
++ Response 401 (text/plain)
+    
+        UNAUTHORIZED, returned when incorrect IdM token has been provided. 
+
+
+# Group Regions
+
+## Regions Collections [/v1/regions]
+
+### List all regions [GET]
+
+This operations allows to get the list of the available regions.
+
+It is only necessary one token. 
+X-Auth-Token: This token identifies the user as a member of Fiware Lab ecosystem.
+In this case, it is not necessary the token (X-Auth-Token-KeyStone), since the system doesn’t connect with the OpenStack node.
+
++ Request
+    + Headers
+    
+            X-Auth-Token: <token provided by FIWARE IdM>
+            Accept:application/json
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "Infrastructures": [
+                    {
+                        "id": "Budapest2",
+                        "name": "Budapest2"
+                    },
+                    {
+                        "id": "Crete",
+                        "name": "Crete"
+                    },
+                    {
+                        "id": "Gent",
+                        "name": "Gent"
+                    },
+                    {
+                        "id": "Karlskrona2",
+                        "name": "Karlskrona2"
+                    },
+                    {
+                        "id": "Lannion2",
+                        "name": "Lannion2"
+                    },
+                    {
+                        "id": "Mexico",
+                        "name": "Mexico"
+                    },
+                    {
+                        "id": "PiraeusN",
+                        "name": "PiraeusN"
+                    },
+                    {
+                        "id": "PiraeusU",
+                        "name": "PiraeusU"
+                    },
+                    {
+                        "id": "Poznan",
+                        "name": "Poznan"
+                    },
+                    {
+                        "id": "SaoPaulo",
+                        "name": "SaoPaulo"
+                    },
+                    {
+                        "id": "SophiaAntipolis",
+                        "name": "SophiaAntipolis"
+                    },
+                    {
+                        "id": "Spain2",
+                        "name": "Spain2"
+                    },
+                    {
+                        "id": "Trento",
+                        "name": "Trento"
+                    },
+                    {
+                        "id": "Volos",
+                        "name": "Volos"
+                    },
+                    {
+                        "id": "Waterford",
+                        "name": "Waterford"
+                    },
+                    {
+                        "id": "Zurich",
+                        "name": "Zurich"
+                    }
+                ]
+            }
+            
+
++ Response 401 (text/plain)
+    
+        UNAUTHORIZED, returned when incorrect IdM token has been provided. 
+
+
+# Group Private Flavors
+
+It is necessary both tokens. X-Auth-Token: This token identifies the user as a member of Fiware Lab ecosystem. X-Auth-Token-KeyStone: this token identifies the user as a member of the OpenStack node. Both tokens are synchronized through the KeyRock and the KeyStone IdMs
+
+## Private Flavors Collections [/v1/regions/{id_region}/flavors]
+
+### List all Private Flavors Collections [GET]
+
+This operations allows to get the list of the private flavors for one region.
+
++ Parameters
+
+    + id_region (string) - Id of the region
+
++ Request
+    + Headers
+    
+            X-Auth-Token: <token provided by FIWARE IdM>
+            X-Auth-Token-KeyStone: <token provided by OpenStack KeyStone to access the nodes>
+            Accept:application/json
+
++ Response 200 (application/json)
+
+    + Body
+    
+            {
+                "flavors": [
+                    {
+                        "disk": 1,
+                        "id": "1",
+                        "name": "m1.tiny",
+                        "nodes": [
+                            "Spain2"
+                        ],
+                        "promoted": false,
+                        "public": false,
+                        "ram": 512,
+                        "swap": 0,
+                        "vcpus": 1
+                    },
+                    {
+                        "disk": 20,
+                        "id": "2",
+                        "name": "m1.small",
+                        "nodes": [
+                            "Spain2"
+                        ],
+                        "promoted": false,
+                        "public": false,
+                        "ram": 2048,
+                        "swap": 0,
+                        "vcpus": 1
+                    },
+                    {
+                        "disk": 40,
+                        "id": "3",
+                        "name": "m1.medium",
+                        "nodes": [
+                            "Spain2"
+                        ],
+                        "promoted": false,
+                        "public": false,
+                        "ram": 4096,
+                        "swap": 0,
+                        "vcpus": 2
+                    },
+                    {
+                        "disk": 80,
+                        "id": "4",
+                        "name": "m1.large",
+                        "nodes": [
+                            "Spain2"
+                        ],
+                        "promoted": false,
+                        "public": false,
+                        "ram": 8192,
+                        "swap": 0,
+                        "vcpus": 4
+                    },
+                    {
+                        "disk": 20,
+                        "id": "5",
+                        "name": "m1.large.ephemeral",
+                        "nodes": [
+                            "Spain2"
+                        ],
+                        "promoted": false,
+                        "public": false,
+                        "ram": 8192,
+                        "swap": 0,
+                        "vcpus": 4
+                    }
+                ]
+            }
+
++ Response 404
+
+        Returned when the given region id doesn't exist in the ecosystem.
+
++ Response 401 (text/plain)
+    
+        UNAUTHORIZED, returned when incorrect IdM token has been provided.
+
++ Response 401
+
+        Returned when your node credentials (KeyStone token) are wrong and the request requires user authentication
+
++ Response 502
+
+        Returned when the OpenStack infrastructure is not reachable.
+
+### Create a new private flavor [POST]
+
+Allows to create a new private flavor for one region. It takes an XML or JSON body the description
+of the flavor characteristics:
+
++ name (string) - The name of the new flavor
++ vcpus (int) - The number of CPUs for the VMs based on this flavor
++ ram (int) - The amount of RAM in megabytes for the VMs based on this flavor
++ disk (int) - The amount of disk space in gigabytes for the VMs based on this flavor
++ swap (int) - The amount of swap space in megabytes for the VMs based on this flavor
+
+
++ Parameters
+
+    + id_region (string) - Id of the region
+
++ Request (application/json)
+
+    + headers
+    
+            X-Auth-Token: <token provided by FIWARE IdM>
+            X-Auth-Token-KeyStone: <token provided by OpenStack KeyStone to access the nodes>
+            Accept:application/json
+
+    + body
+            
+            {
+                "flavor": {
+                    "name":"TestNano",
+                    "vcpus":1,
+                    "ram":2,
+                    "disk":10,
+                    "swap":0
+                }
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "flavor": {
+                    "disk": 10,
+                    "id": "cfff326d-aecc-4cae-bc4e-a901f9b73c69",
+                    "name": "TestNano",
+                    "nodes": [],
+                    "promoted": false,
+                    "public": false,
+                    "ram": 2,
+                    "swap": 0,
+                    "vcpus": 1
+                }
+            }
+
+
++ Response 400
+
+        Returned when incorrect data has been suplied.
+
++ Response 404
+
+        Returned when the region doen't exist.
+
++ Response 409
+
+        Returned when the name already exists in the database.
+        
++ Response 401
+    
+        UNAUTHORIZED, returned when incorrect IdM token has been provided.
+
++ Response 401
+
+        Returned when your node credentials (KeyStone token) are wrong and the request requires user authentication
+
++ Response 403
+
+        Returned when, managing flavors in one region, the credentials (KeyStone token) don't give you access to this resource.
+
++ Response 502
+
+        Returned when the OpenStack infrastructure is not reachable.
+
+## Private Flavor [/v1/region/{id_region}/flavors/{id}]
+
+### Get private flavor info [GET]
+
+Allows to get the details of a private flavor for one region.
+
++ Parameters
+
+    + id_region (string) - Id of the region
+    + id (string) - Id of the private flavor
+
++ Request
+
+    + Headers
+    
+            X-Auth-Token: <token provided by FIWARE IdM>
+            X-Auth-Token-KeyStone: <TODO>
+            Accept:application/json
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "flavor": {
+                    "disk": 20,
+                    "id": "5",
+                    "name": "m1.large.ephemeral",
+                    "nodes": [
+                        "Spain2"
+                    ],
+                    "promoted": false,
+                    "public": false,
+                    "ram": 8192,
+                    "swap": 0,
+                    "vcpus": 4
+                }
+            }
+
++ Response 401
+    
+        UNAUTHORIZED, returned when incorrect IdM token has been provided.
+
++ Response 401
+
+        Returned when your node credentials (KeyStone token) are wrong and the request requires user authentication
+
++ Response 404
+
+        Returned when the flavor doesn't exist in the node.
+
++ Response 502
+
+        Returned when the OpenStack infrastructure is not reachable.
+
+
+### Delete private flavor [DELETE]
+
+Allows to delete a private flavor for one region.
+
++ Parameters
+    
+    + id_region (string) - Id of the region
+    + id (string) - Id of the promoted flavor.
++ Request
+    + Headers
+    
+            X-Auth-Token: <token provided by FIWARE IdM>
+            X-Auth-Token-KeyStone: <TODO>
+
++ Response 204
++ Response 404
+
+        Returned when the flavor doesn't exists in the node.
+
++ Response 404
+
+        Returned when the region doesn't exist.
+
++ Response 401
+    
+        UNAUTHORIZED, returned when incorrect IdM token has been provided.
+
++ Response 401
+
+        Returned when your node credentials (KeyStone token) are wrong and the request requires user authentication
+
++ Response 403
+
+        Returned when, managing flavors in one region, the credentials (KeyStone token) don't give you access to this resource.
+
++ Response 404
+
+        Returned when the flavor doesn't exist in the node.
+
++ Response 502
+
+        Returned when the OpenStack infrastructure is not reachable.
+
+
+# Group Infrastructures
+
+## Infrastructure Collection [/v1/infrastructures]
+
+### Register a new infrastucture [POST]
 
 Allows to create a new infrastructure. It takes a XML or JSON body containing
 the name, endpoint url of nova.
@@ -449,9 +1063,9 @@ the name, endpoint url of nova.
 
         Returned when the uuid or name already exists in the database.
 
-#### Infrastructure [/v1/infrastructures/{id}]
+## Infrastructure [/v1/infrastructures/{id}]
 
-##### Unregister infrastructure [DELETE]
+### Unregister infrastructure [DELETE]
 
 + Parameters
 
@@ -473,11 +1087,11 @@ the name, endpoint url of nova.
 
         Returned when the infrastructure is still being used.
 
-### Group Flavors
+# Group Flavors
 
-#### Flavors Collection [/v1/flavors{?promoted}{?public}]
+## Flavors Collection [/v1/flavors{?promoted}{?public}]
 
-##### List all flavors [GET]
+### List all flavors [GET]
 
 This operations allows to get all the registered flavors.
 
@@ -658,7 +1272,7 @@ This operations allows to get all the registered flavors.
 
         Returned when the OpenStack infrastructure is not reachable.
 
-##### Create a new flavor [POST]
+### Create a new flavor [POST]
 
 Allows to create a new flavor. It takes an XML or JSON body the description
 of the flavor characteristics:
@@ -756,9 +1370,9 @@ of the flavor characteristics:
 
         Returned when the OpenStack infrastructure is not reachable.
 
-#### Flavor [/v1/flavors/{id}]
+## Flavor [/v1/flavors/{id}]
 
-##### Get flavor info [GET]
+### Get flavor info [GET]
 
 + Parameters
 
@@ -815,7 +1429,7 @@ of the flavor characteristics:
 
         Returned when the OpenStack infrastructure is not reachable.
 
-##### Modify an existing flavor [PUT]
+### Modify an existing flavor [PUT]
 
 Updates the flavor identified by the id. The allowed changes refers to its 
 public and promoted parameters. Any infrastructure owner will be able to publish
@@ -922,7 +1536,7 @@ It also allows to install a public flavor in a new infrastructure.
 
         Returned when the OpenStack infrastructure is not reachable.
 
-##### Delete flavor [DELETE]
+### Delete flavor [DELETE]
 
 + Parameters
 
@@ -936,7 +1550,7 @@ It also allows to install a public flavor in a new infrastructure.
 + Response 502
 
         Returned when the OpenStack infrastructure is not reachable.
-
+        
 ##License##
 
 Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
