@@ -3,6 +3,12 @@ from flask import request
 from flask import Response
 from flavorsync.parser.parser_factory import ParserFactory
 
+
+class UnAuthorizedMethodError(Exception):
+    status_code = 405
+    def __init__(self):
+        Exception.__init__(self, "UnAuthorized method")
+
 class UnimplementedMethodError(Exception):
     def __init__(self):
         Exception.__init__(self, "Uninplemented method")
@@ -94,6 +100,29 @@ class OpenStackConnectionError(FlavorSyncError):
         message += "because it is down, it is not reachable or credentials are "
         message += "wrong. Please check it"
         super(OpenStackConnectionError, self).__init__(message, self.status_code)
+
+class OpenStackEndPointNotFound(FlavorSyncError):
+    status_code = 502
+    
+    def __init__(self, infrastructure_name):
+        message = "Error publicURL endpoint for compute service in {0} region not found".format(infrastructure_name)
+        super(OpenStackEndPointNotFound, self).__init__(message, self.status_code)
+
+class OpenStackForbidden(FlavorSyncError):
+    status_code = 403
+    
+    def __init__(self, infrastructure_name):
+        message = "Error when managing flavors in the region {0}. Your credentials don't give you access to this resource.".format(infrastructure_name)
+        super(OpenStackForbidden, self).__init__(message, self.status_code)
+
+
+class OpenStackUnauthorizedError(FlavorSyncError):
+    status_code = 401
+    
+    def __init__(self):
+        message = "Your credentials are wrong and the request requires user authentication"
+        message += " Please check it"
+        super(OpenStackUnauthorizedError, self).__init__(message, self.status_code)
 
 class UnsupportedMediaTypeError(FlavorSyncError):
     status_code = 415

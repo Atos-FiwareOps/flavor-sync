@@ -4,3 +4,7 @@ dbpass = 'yourpassword'
 dbname = 'fiwareflavorsync'
 
 DB_URI = 'mysql+pymysql://' + dbuser + ':' + dbpass + '@' + dbhost + '/' + dbname
+
+url_keyrock = "https://account.lab.fiware.org/user/?access_token="
+url_keystone = "http://cloud.lab.fiware.org:4730/v3/"
+nova_api_version = 2

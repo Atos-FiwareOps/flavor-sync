@@ -50,11 +50,31 @@ class Infrastructure(db.Model, ParseableModel):
         return ParseableModel.serialize(self, mimetype)
     
     def _to_content_dict(self):
-        return self.name
+        return {
+                   "id": self.name,
+                   "name" : self.name
+               } 
     
     def to_dict(self):
         return {"infrastructure": {"name" : self.name}}
+
+class InfrastructureCollection(ParseableModel):
+    def __init__(self, infrastructures):
+        self.infrastructures = infrastructures
     
+    def serialize(self, mimetype):
+        return ParseableModel.serialize(self, mimetype)
+    
+    def extend(self, infrastructure_collection):
+        self.infrastructures.extend(infrastructure_collection.infrastructures)
+    
+    def to_dict(self):
+        infrastructures = []
+        for infrastructure in self.infrastructures:
+            infrastructure_dict = infrastructure._to_content_dict()
+            infrastructures.append(infrastructure_dict)
+        
+        return {"Infrastructures" : infrastructures}    
 
 class Flavor(db.Model, ParseableModel):
     __tablename__ = 'flavor'

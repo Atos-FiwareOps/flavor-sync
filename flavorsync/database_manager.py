@@ -7,6 +7,9 @@ from flavorsync.exceptions import InfrastructureAlreadyExistsError,\
 from sqlalchemy.orm.exc import UnmappedInstanceError
 
 class DatabaseManager():
+    def get_infrastructures(self):
+        return Infrastructure.query.all()
+
     def get_infrastructure(self, name):
         return Infrastructure.query.get(name)
     
@@ -45,6 +48,9 @@ class DatabaseManager():
             db.session.commit()
         except InvalidRequestError:
             raise FlavorAlreadyExistsError(flavor.name)
+        except IntegrityError:
+            raise FlavorAlreadyExistsError(flavor.name)
+        return flavor
     
     def get_flavor(self, flavor_id):
         flavor = Flavor.query.get(flavor_id)
