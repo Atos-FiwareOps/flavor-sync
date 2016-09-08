@@ -45,33 +45,30 @@ operations and data structures that the OpenStack one, so it can be easily
 integrated with existing applications that use the
 [OpenStack REST API](http://developer.openstack.org/api-ref-compute-v2.1.html#os-flavors).
 
-This is a work in progress. At the moment, it is integrated and delivered the management of the promoted flavors and the private flavors for the different nodes of the Fiware ecosystem. The remaining functionalities include the centralized lifecycle of the flavor management for the ecosystem (pending to achieve an agreement and integrate the authentication system).
+The Flavour Sync component has been developed in conjunction with the [Fi-Dash components](https://github.com/fidash). There are different widgets that interact with the API of the component such as [widget-managepromotedflavors](https://github.com/fidash/widget-managepromotedflavors), [widget-compareflavors](https://github.com/fidash/widget-compareflavors), [widget-listflavors](https://github.com/fidash/widget-listflavors) and [widget-showdifferenceflavors](https://github.com/fidash/widget-showdifferenceflavors).
+
+This Version 1.0 manages the promoted and the private flavors for the different nodes of the Fiware ecosystem. Beside, it is integrated with the [KeyRock GE](http://catalogue.fiware.org/enablers/identity-management-keyrock) and the [KeyStone of OpenStack](http://docs.openstack.org/developer/keystone/) in order to manage the authentification and authorization of the functionalities. This version also covers the functionalities to manage the centralized lifecycle of the flavor management for the ecosystem (included in the previous version v0.8). Nevertheless, these functionalities are pending to be validated with the infrastructures of the ecosystem, since it is needed an agreement in order to centralize and delegate these actions homogeneously. 
+
 
 ## Features implemented
 
-There are three different actors in order to interact with the component:
-* Basic users: They have been registered at [FIWARE Lab](https://account.lab.fiware.org/) with the necessary authorizations.
-* Infrastructure Managers: They have been registered at Fiware Lab and they have authorization to manage common functionalities (role: InfrastructureManager) such as the management of the promoted flavors.
-* Infrastructure operators: They have been registered at Fiware Lab with the role of infrastructure and they have the privileges to manage their own OpenStack node through their Fiware Lab account
+The current version (version 1.0) implements the following requirements:
 
-
-The complete requirement list of this version is the following one:
-
-Manage promoted flavors (stable)
+Manage promoted flavors
 
 * Actors lists all the promoted flavors.
 * Actors gets the details of the promoted flavors.
 * The infrastructure manager creates a new promoted flavor.
 * The infrastructure manager deletes a promoted flavor.
 
-Manage private flavors by regions (stable).
+Manage private flavors by regions.
 * The infrastructure operator gets a list of private flavors for his/her region.
 * The infrastructure operator gets the details of the private flavor for his/her region.
 * The infrastructure operator creates a private flavor for his/her region.
 * The infrastructure operator updates a private flavor for his/her region.
 * The infrastructure operator deletes a private flavor for his/her region.
 
-Manage the flavor lifecycle of the federated environment. With these functionalities, the ecosystem could manage the whole lifecycle of the flavors for the different regions (pending to have an agreement for the lifecycle).
+Manage the flavor lifecycle of the federated environment. With these functionalities, the ecosystem could manage the whole lifecycle of the flavors for the different regions (covered by the previous version 0.8).
 
 * An infrastructure operator registers his infrastructure in the Flavor
 synchronization tool.
@@ -374,14 +371,11 @@ It should return an empty JSON list.
 
 ## Configure the users and roles
 
-The file initial_data.json has created automatically the groups CONSUMER AND
-PROVIDER when you have executed "python manage.py syncdb".
+There are three different actors with their roles in order to interact with the component:
+* Basic users: They have been registered at [FIWARE Lab](https://account.lab.fiware.org/) with the necessary authorizations.
+* Infrastructure Managers: They have been registered at Fiware Lab and they have authorization to manage common functionalities (role: InfrastructureManager) such as the management of the promoted flavors.
+* Infrastructure operators: They have been registered at Fiware Lab with the role of infrastructure and they have the privileges to manage their own OpenStack node through their Fiware Lab account.
 
-You only need to create the users and the providers associated to the agreements
-and to assign the correct role (CONSUME and PROVIDER).
-
-In order to introduce them you have to connect to http://localhost:8000/admin
-and add the new users (with CONSUME or PROVIDER groups).
 
 ## API specification
 
