@@ -1,5 +1,7 @@
 # Flavor sync
 
+ [![License badge](https://img.shields.io/badge/license-Apache_2.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+
 The Flavor synchronization tool provides a backend system for a marketplace
 of OpenStack flavors. This project is part of [FIWARE](http://www.fiware.org/).
 
